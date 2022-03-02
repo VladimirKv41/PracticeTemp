@@ -124,22 +124,10 @@ int main() {
 	for (auto it = mins.begin(); it != mins.end(); it++) {
 		std::cout << *it << " ";
 	}
-	//select->print();
-
-	//select->print();
-
-	//select->aggregation(agg_type::COUNT, "Дата и время");
-	//select->print();
 
 	delete cube;
 	delete select;
-	dimensions.~vector();
-	measures.~vector();
-	food.~vector();
-	datetime.~vector();
-	year.~vector();
-	maxs.~vector();
-	mins.~vector();
+
 	_CrtDumpMemoryLeaks();
 	return 0;
 }
