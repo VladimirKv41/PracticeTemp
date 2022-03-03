@@ -73,7 +73,6 @@ void Selection::clean(bool cube_cleaning){
 	if (!m_selection_points.empty()) {
 		m_selection_points.clear();
 		m_cube->clean_vector(m_aggregation_measures);
-		//m_cube->clean_vector(m_aggregation_points);
 	}
 }
 
@@ -107,7 +106,7 @@ Selection::~Selection() {
  */
 void Selection::making
 (
-	const dim_positions_map& a_map_from,
+	const std::map<std::string, DimensionPosition*>& a_map_from,
 	const std::string& a_dim_name,
 	const std::vector<std::string>& a_positions_list,
 	const std::set<std::string>& a_measure_list
