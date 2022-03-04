@@ -1,4 +1,4 @@
-п»ї#pragma once
+#pragma once
 #include <string>
 
 class Dimension;
@@ -6,25 +6,25 @@ class DimensionPosition;
 class Fact;
 
 /**
- * @brief РўРѕС‡РєР° РґР°РЅРЅС‹С….
+ * @brief Точка данных.
  * 
- * РљР»Р°СЃСЃ СЃРІСЏР·С‹РІР°СЋС‰РёР№ РёР·РјРµСЂРµРЅРёРµ Рё С„Р°РєС‚ РґР»СЏ РґР°Р»СЊРЅРµР№С€РµРіРѕ РІР·Р°РёРјРѕРґРµР№СЃС‚РІРёСЏ.
+ * Класс связывающий измерение и факт для дальнейшего взаимодействия.
  */
 class DataPoint {
 public:
 	DataPoint(Fact* a_fact, Dimension* a_dim, DimensionPosition* a_dim_position);
 
-	// РџРѕР»СѓС‡РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕРіРѕ РёР·РјРµСЂРµРЅРёСЏ
+	// Получение связанного измерения
 	const Dimension* const get_Dimension() const;
 
-	// РџРѕР»СѓС‡РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕРіРѕ С„Р°РєС‚Р°
+	// Получение связанного факта
 	Fact* const get_Fact() const;
 
-	// РџРѕР»СѓС‡РµРЅРёРµ РѕС‚РјРµС‚РєРё РІ СЃРІСЏР·Р°РЅРЅРѕРј РёР·РјРµСЂРµРЅРёРё
+	// Получение отметки в связанном измерении
 	const std::string& get_dim_position_name() const;
 	
 private:
-	// РЎРІСЏР·Р°РЅРЅС‹Рµ С„Р°РєС‚/РёР·РјРµСЂРµРЅРёРµ/РѕС‚РјРµС‚РєР° РІ РёР·РјРµСЂРµРЅРёРё
+	// Связанные факт/измерение/отметка в измерении
 	Fact* m_fact;
 	Dimension* m_dim;
 	DimensionPosition* m_dim_position;

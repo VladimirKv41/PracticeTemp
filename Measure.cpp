@@ -1,18 +1,18 @@
-п»ї#include "Measure.h"
+#include "Measure.h"
 
 /**
- * @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.
+ * @brief Конструктор.
  * 
- * @param [in,out] a_name РќР°Р·РІР°РЅРёРµ РјРµС‚СЂРёРєРё
+ * @param [in,out] a_name Название метрики
  */
 Measure::Measure(const std::string& a_name) : m_name(a_name) {
 	
 }
 
 /**
- * @brief РџРѕР»СѓС‡РµРЅРёРµ РЅР°Р·РІР°РЅРёРµ РјРµС‚СЂРёРєРё.
+ * @brief Получение название метрики.
  * 
- * @return РќР°Р·РІР°РЅРёРµ РјРµС‚СЂРёРєРё
+ * @return Название метрики
  */
 const std::string& Measure::get_name() const {
 	return m_name;

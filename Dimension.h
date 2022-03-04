@@ -1,4 +1,4 @@
-п»ї#pragma once
+#pragma once
 #include <string>
 #include <vector>
 #include <map>
@@ -7,41 +7,41 @@ class DataPoint;
 class DimensionPosition;
 
 /**
- * @brief РР·РјРµСЂРµРЅРёРµ.
+ * @brief Измерение.
  * 
- * РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ Рё СЂР°Р±РѕС‚С‹ СЃ РѕРґРЅРѕР№ РёР· "РѕСЃРµР№" РєСѓР±Р°.
+ * Класс для хранения и работы с одной из "осей" куба.
  */
 class Dimension {
 public:
 
 	Dimension(const std::string &a_name);
 
-	// Р”РѕР±Р°РІР»РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕР№ С‚РѕС‡РєРё РґР°РЅРЅС‹С…
+	// Добавление связанной точки данных
 	void push_DataPoint(DataPoint* a_point);
 
-	// РџРѕР»СѓС‡РµРЅРёРµ РІРµРєС‚РѕСЂР° СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
+	// Получение вектора связанных точек данных
 	const std::vector<DataPoint*>& get_DataPoints() const;
 
-	// РџРѕР»СѓС‡РµРЅРёРµ РѕС‚РјРµС‚РєРё РІ РёР·РјРµСЂРµРЅРёРё
+	// Получение отметки в измерении
 	DimensionPosition* const get_DimensionPosition(const std::string &a_mark);
 
-	// РџРѕРёСЃРє РѕС‚РјРµС‚РєРё РІ РёР·РјРµСЂРµРЅРёРё
+	// Поиск отметки в измерении
 	bool search_mark(const std::string &a_mark) const;
 
-	// РџРѕР»СѓС‡РµРЅРёРµ РЅР°Р·РІР°РЅРёСЏ РёР·РјРµСЂРµРЅРёСЏ
+	// Получение названия измерения
 	const std::string& get_name() const;
 
-	// РџРѕР»СѓС‡РµРЅРёРµ РјР°СЃСЃРёРІР° РѕС‚РјРµС‚РѕРє РЅР° РёР·РјРµСЂРµРЅРёРё
+	// Получение массива отметок на измерении
 	const std::map<std::string, DimensionPosition*>& get_positions() const;
 
 	~Dimension();
 	
 private:
-	// РњР°СЃСЃРёРІ РѕС‚РјРµС‚РѕРє РЅР° РёР·РјРµСЂРµРЅРёРё
-	// РљР»СЋС‡: РЅР°Р·РІР°РЅРёРµ РѕС‚РјРµС‚РѕРє
+	// Массив отметок на измерении
+	// Ключ: название отметок
 	std::map<std::string,DimensionPosition*> m_positions_map;
-	// РќР°Р·РІР°РЅРёРµ РёР·РјРµСЂРµРЅРёСЏ
+	// Название измерения
 	std::string m_name;
-	// Р’РµРєС‚РѕСЂ СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
+	// Вектор связанных точек данных
 	std::vector<DataPoint*> m_points;
 };

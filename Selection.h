@@ -1,4 +1,4 @@
-п»ї#pragma once
+#pragma once
 #include <vector>
 #include <string>
 #include <map>
@@ -6,22 +6,22 @@
 #include <set>
 
 /**
- * @brief РўРёРї Р°РіРіСЂРµРіР°С†РёРё.
+ * @brief Тип аггрегации.
  */
 enum class agg_type {
-	COUNT, // РљРѕР»РёС‡РµСЃС‚РІРѕ
-	SUM, // РЎСѓРјРјР°
-	AVERAGE // РЎСЂРµРґРЅРµРµ
+	COUNT, // Количество
+	SUM, // Сумма
+	AVERAGE // Среднее
 };
 
 /**
- * @brief Р РµР·СѓР»СЊС‚Р°С‚ СЃРѕСЃС‚Р°РІР»РµРЅРёСЏ РІС‹Р±РѕСЂРєРё.
+ * @brief Результат составления выборки.
  */
 enum class make_result {
-	CUBE_NOT_FOUND = -2, // РєСѓР± СѓРґР°Р»РµРЅ
-	UNKNOWN_DIMENSION, // РќРµРёР·РІРµСЃС‚РЅРѕРµ РёР·РјРµСЂРµРЅРёРµ
-	NO_FACT_FOUND, // С„Р°РєС‚С‹ РЅРµ РЅР°Р№РґРµРЅС‹
-	CREATED // РІС‹Р±РѕСЂРєР° СЃРѕР·РґР°РЅР°
+	CUBE_NOT_FOUND = -2, // куб удален
+	UNKNOWN_DIMENSION, // Неизвестное измерение
+	NO_FACT_FOUND, // факты не найдены
+	CREATED // выборка создана
 };
 
 class DataPoint;
@@ -40,35 +40,35 @@ struct hash_pair {
 		return hash1 ^ hash2;
 	}
 };
-// РўРёРї РґР°РЅРЅС‹С… РІС‹Р±РѕСЂРєРё С‚РѕС‡РµРє РґР°РЅРЅС‹С…
-// РљР»СЋС‡: РїР°СЂР° <РќР°Р·РІР°РЅРёРµ РёР·РјРµСЂРµРЅРёСЏ, РќР°Р·РІР°РЅРёРµ РѕС‚РјРµС‚РѕРє РЅР° РёР·РјРµСЂРµРЅРёРё>,
-// Р—РЅР°С‡РµРЅРёРµ: РљР»СЋС‡: РЅР°Р·РІР°РЅРёРµ РјРµС‚СЂРёРєРё, Р—РЅР°С‡РµРЅРёРµ: СѓРєР°Р·Р°С‚РµР»СЊ РЅР° С‚РѕС‡РєСѓ РґР°РЅРЅС‹С…
+// Тип данных выборки точек данных
+// Ключ: пара <Название измерения, Название отметок на измерении>,
+// Значение: Ключ: название метрики, Значение: указатель на точку данных
 typedef std::unordered_map<std::pair<std::string, std::string>, std::unordered_multimap<std::string, DataPoint*>, hash_pair> dpoint_ummaps_map;
 
 /**
- * @brief Р’С‹Р±РѕСЂРєР°.
+ * @brief Выборка.
  * 
- * РљР»Р°СЃСЃ РґР»СЏ СЃРѕСЃС‚Р°РІР»РµРЅРёСЏ Рё Р°РіСЂРµРіРёСЂРѕРІР°РЅРёСЏ РІС‹Р±РѕСЂРѕРє РЅР° РѕСЃРЅРѕРІРµ РґР°РЅРЅС‹С… РёР· РєСѓР±Р°.
+ * Класс для составления и агрегирования выборок на основе данных из куба.
  */
 class Selection {
 public:
 
 	Selection(Cube* a_cube);
 
-	// РЎРѕР·РґР°РЅРёРµ РІС‹Р±РѕСЂРєРё
+	// Создание выборки
 	make_result make(const std::string& a_dim_name, const std::vector<std::string>& a_positions_list, const std::set<std::string>& a_measure_list = {});
 
-	// РћС‡РёСЃС‚РєР° РІС‹Р±РѕСЂРєРё
+	// Очистка выборки
 	void clean(bool cube_cleaning = false);
 
 	~Selection();
 
 private:
 
-	// РџРѕРёСЃРє РёР·РјРµСЂРµРЅРёСЏ
+	// Поиск измерения
 	std::vector<Dimension*>::const_iterator find_dimension(const std::string& a_dimension_name) const;
 
-	// Р—Р°РїРѕР»РЅРµРЅРёРµ РІС‹Р±РѕСЂРєРё (РґР»СЏ РёР·РЅР°С‡Р°Р»СЊРЅРѕ РїСѓСЃС‚РѕР№ РІС‹Р±РѕСЂРєРё)
+	// Заполнение выборки (для изначально пустой выборки)
 	void making
 	(
 		const std::map<std::string, DimensionPosition*>& a_map_from,
@@ -76,7 +76,7 @@ private:
 		const std::set<std::string>& a_measure_list
 	);
 
-	// Р—Р°РїРѕР»РЅРµРЅРёРµ РІС‹Р±РѕСЂРєРё (РґР»СЏ СѓР¶Рµ Р·Р°РїРѕР»РЅРµРЅРЅРѕР№ РІС‹Р±РѕСЂРєРё)
+	// Заполнение выборки (для уже заполненной выборки)
 	void making
 	(
 		const dpoint_ummaps_map& a_map_from,
@@ -85,7 +85,7 @@ private:
 		const std::set<std::string>& a_measure_list
 	);
 
-	// РџРѕР»СѓС‡РµРЅРёРµ С‚РѕС‡РµРє РґР°РЅРЅС‹С… СЃ СѓРєР°Р·Р°РЅРЅС‹РјРё РјРµС‚СЂРёРєР°РјРё
+	// Получение точек данных с указанными метриками
 	void get_DataPoints_by_measure
 	(
 		std::unordered_multimap<std::string, DataPoint*>& a_umap_to,
@@ -93,16 +93,16 @@ private:
 		const std::set<std::string>& a_measure_list
 	);
 
-	// Р”РѕР±Р°РІР»РµРЅРёРµ РѕСЃС‚Р°РІС€РёС…СЃСЏ С‚РѕС‡РµРє РґР°РЅРЅС‹С…
+	// Добавление оставшихся точек данных
 	void add_rest_fact_points(dpoint_ummaps_map& a_map, const std::string& a_dim_name, const std::string& a_dim_position);
 	
 
-	// РўРµ С‚РѕС‡РєРё РґР°РЅРЅС‹С… РєСѓР±Р°, РёР· РєРѕС‚РѕСЂС‹С… СЃРѕСЃС‚РѕРёС‚ РІС‹Р±РѕСЂРєР°
+	// Те точки данных куба, из которых состоит выборка
 	dpoint_ummaps_map m_selection_points;	
-	// РњРµС‚СЂРёРєРё, СЃРѕР·РґР°РЅРЅС‹Рµ РЅР° РѕСЃРЅРѕРІРµ Р°РіСЂРµРіР°С†РёРё
+	// Метрики, созданные на основе агрегации
 	std::vector<Measure*> m_aggregation_measures;
-	// РР·РјРµСЂРµРЅРёРµ РґР»СЏ Р°РіСЂРµРіР°С†РёР№
+	// Измерение для агрегаций
 	Dimension* m_aggregation_dim;
-	// РЎРІСЏР·Р°РЅРЅС‹Р№ РєСѓР± РґР»СЏ СЃРѕР·РґР°РЅРёСЏ РІС‹Р±РѕСЂРєРё
+	// Связанный куб для создания выборки
 	Cube* m_cube;
 };
