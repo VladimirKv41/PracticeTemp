@@ -4,7 +4,7 @@
 #include <map>
 
 class DataPoint;
-class DimensionPosition;
+class DimensionMark;
 
 /**
  * @brief Измерение.
@@ -23,7 +23,7 @@ public:
 	const std::vector<DataPoint*>& get_DataPoints() const;
 
 	// Получение отметки в измерении
-	DimensionPosition* const get_DimensionPosition(const std::string &a_mark);
+	DimensionMark* const get_DimensionPosition(const std::string &a_mark);
 
 	// Поиск отметки в измерении
 	bool search_mark(const std::string &a_mark) const;
@@ -32,14 +32,14 @@ public:
 	const std::string& get_name() const;
 
 	// Получение массива отметок на измерении
-	const std::map<std::string, DimensionPosition*>& get_positions() const;
+	const std::map<std::string, DimensionMark*>& get_marks() const;
 
 	~Dimension();
 	
 private:
 	// Массив отметок на измерении
 	// Ключ: название отметок
-	std::map<std::string,DimensionPosition*> m_positions_map;
+	std::map<std::string,DimensionMark*> m_marks_map;
 	// Название измерения
 	std::string m_name;
 	// Вектор связанных точек данных

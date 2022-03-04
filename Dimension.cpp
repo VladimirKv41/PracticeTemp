@@ -1,5 +1,5 @@
 ﻿#include "Dimension.h"
-#include "DimensionPosition.h"
+#include "DimensionMark.h"
 
 /**
  * @brief Конструктор.
@@ -36,13 +36,13 @@ const std::vector<DataPoint*>& Dimension::get_DataPoints() const {
  * @param [in] a_mark Название отметки
  * @return Отметка
  */
-DimensionPosition* const Dimension::get_DimensionPosition(const std::string &a_mark) {
-	if (m_positions_map.find(a_mark) == m_positions_map.end()) {
-		m_positions_map[a_mark] = new DimensionPosition(a_mark);
-		return m_positions_map[a_mark];
+DimensionMark* const Dimension::get_DimensionPosition(const std::string &a_mark) {
+	if (m_marks_map.find(a_mark) == m_marks_map.end()) {
+		m_marks_map[a_mark] = new DimensionMark(a_mark);
+		return m_marks_map[a_mark];
 	}
 	else 
-		return m_positions_map[a_mark];
+		return m_marks_map[a_mark];
 }
 
 /**
@@ -52,7 +52,7 @@ DimensionPosition* const Dimension::get_DimensionPosition(const std::string &a_m
  * @return Существует отметка или нет
  */
 bool Dimension::search_mark(const std::string &a_mark) const {
-	if (m_positions_map.find(a_mark) == m_positions_map.end()) {
+	if (m_marks_map.find(a_mark) == m_marks_map.end()) {
 		return false;
 	}
 	else
@@ -73,12 +73,12 @@ const std::string& Dimension::get_name() const {
  * 
  * @return Массив отметок на измерении
  */
-const std::map<std::string, DimensionPosition*>& Dimension::get_positions() const {
-	return m_positions_map;
+const std::map<std::string, DimensionMark*>& Dimension::get_marks() const {
+	return m_marks_map;
 }
 
 Dimension::~Dimension(){
-	for (auto it = m_positions_map.begin(); it != m_positions_map.end(); it++) {
+	for (auto it = m_marks_map.begin(); it != m_marks_map.end(); it++) {
 		delete it->second;
 	}
 }

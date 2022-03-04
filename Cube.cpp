@@ -1,6 +1,6 @@
 ﻿#include "Cube.h"
 #include "Dimension.h"
-#include "DimensionPosition.h"
+#include "DimensionMark.h"
 #include "Measure.h"
 #include "Fact.h"
 #include "DataPoint.h"
@@ -56,20 +56,20 @@ bool Cube::add_Measure(const std::string& a_measure_name) {
  * 
  * @param [in] a_value Значение добавляемого факта
  * @param [in] a_measure Название метрики добавляемого факта
- * @param [in] a_positions_list Список отметок в измерениях добавляемого факта
+ * @param [in] a_marks_list Список отметок в измерениях добавляемого факта
  * @return enum class add_result Результат добавления факта : неизвестная метрика/уже существует/добавлен
  */
-add_result Cube::add_Fact(double a_value, const std::string& a_measure_name, const std::vector<std::string>& a_positions_list) {
+add_result Cube::add_Fact(double a_value, const std::string& a_measure_name, const std::vector<std::string>& a_marks_list) {
 	// Поиск указанной метрики
 	std::vector<Measure*>::const_iterator it_measure = find_measure(a_measure_name);
 	if (it_measure == m_measures.end()) {
 		return add_result::UNKNOWN_MEASURE;
 	}
 	// Поиск в уже добавленных ранее фактах
-	if(m_facts.find({ a_measure_name, a_positions_list }) != m_facts.end())
+	if(m_facts.find({ a_measure_name, a_marks_list }) != m_facts.end())
 		return add_result::ALREADY_EXIST;
-	auto it_list = a_positions_list.begin();
-	auto iter_new_fact = m_facts.insert({ { a_measure_name, a_positions_list }, new Fact(a_value, *it_measure) });
+	auto it_list = a_marks_list.begin();
+	auto iter_new_fact = m_facts.insert({ { a_measure_name, a_marks_list }, new Fact(a_value, *it_measure) });
 	// Добавление точек данных
 	for (auto it_dim = m_dims.begin(); it_dim != m_dims.end(); it_dim++, it_list++) {
 		m_points.push_back(new DataPoint(iter_new_fact->second, *it_dim, (*it_dim)->get_DimensionPosition(*it_list)));

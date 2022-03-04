@@ -26,7 +26,7 @@ enum class make_result {
 
 class DataPoint;
 class Dimension;
-class DimensionPosition;
+class DimensionMark;
 class Cube;
 class Fact;
 class Measure;
@@ -56,7 +56,7 @@ public:
 	Selection(Cube* a_cube);
 
 	// Создание выборки
-	make_result make(const std::string& a_dim_name, const std::vector<std::string>& a_positions_list, const std::set<std::string>& a_measure_list = {});
+	make_result make(const std::string& a_dim_name, const std::vector<std::string>& a_marks_list, const std::set<std::string>& a_measure_list = {});
 
 	// Очистка выборки
 	void clean(bool cube_cleaning = false);
@@ -71,8 +71,8 @@ private:
 	// Заполнение выборки (для изначально пустой выборки)
 	void making
 	(
-		const std::map<std::string, DimensionPosition*>& a_map_from,
-		const std::string& a_dim_name, const std::vector<std::string>& a_positions_list,
+		const std::map<std::string, DimensionMark*>& a_map_from,
+		const std::string& a_dim_name, const std::vector<std::string>& a_marks_list,
 		const std::set<std::string>& a_measure_list
 	);
 
@@ -81,7 +81,7 @@ private:
 	(
 		const dpoint_ummaps_map& a_map_from,
 		const std::string& a_dim_name,
-		const std::vector<std::string>& a_positions_list,
+		const std::vector<std::string>& a_marks_list,
 		const std::set<std::string>& a_measure_list
 	);
 
@@ -94,7 +94,7 @@ private:
 	);
 
 	// Добавление оставшихся точек данных
-	void add_rest_fact_points(dpoint_ummaps_map& a_map, const std::string& a_dim_name, const std::string& a_dim_position);
+	void add_rest_fact_points(dpoint_ummaps_map& a_map, const std::string& a_dim_name, const std::string& a_dim_mark);
 	
 
 	// Те точки данных куба, из которых состоит выборка

@@ -1,11 +1,11 @@
-#include "DimensionPosition.h"
+#include "DimensionMark.h"
 
 /**
  * @brief Конструктор.
  *
  * @param [in,out] a_name Название отметки на измерении
  */
-DimensionPosition::DimensionPosition(const std::string& a_name) : m_name(a_name){
+DimensionMark::DimensionMark(const std::string& a_name) : m_name(a_name){
 	
 }
 
@@ -15,7 +15,7 @@ DimensionPosition::DimensionPosition(const std::string& a_name) : m_name(a_name)
  * @param [in,out] a_meas Название метрики
  * @param [in,out] a_point Точка данных
  */
-void DimensionPosition::push_DataPoint(const std::string& a_meas, DataPoint* a_point){
+void DimensionMark::push_DataPoint(const std::string& a_meas, DataPoint* a_point){
 	m_points.insert({ a_meas,a_point });
 }
 
@@ -24,7 +24,7 @@ void DimensionPosition::push_DataPoint(const std::string& a_meas, DataPoint* a_p
  * 
  * @return Название отметки на измерении
  */
-const std::string& DimensionPosition::get_name() const {
+const std::string& DimensionMark::get_name() const {
 	return m_name;
 }
 
@@ -33,6 +33,6 @@ const std::string& DimensionPosition::get_name() const {
  *
  * @return Массив связанных точек данных
  */
-const std::unordered_multimap<std::string, DataPoint*>& DimensionPosition::get_DataPoints() const{
+const std::unordered_multimap<std::string, DataPoint*>& DimensionMark::get_DataPoints() const{
 	return m_points;
 }

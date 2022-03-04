@@ -38,7 +38,7 @@ public:
 	bool add_Measure(const std::string& a_measure_name);
 
 	// Добавление факта
-	add_result add_Fact(double a_value, const std::string& a_measure_name, const std::vector<std::string>& a_positions_list);
+	add_result add_Fact(double a_value, const std::string& a_measure_name, const std::vector<std::string>& a_marks_list);
 
     // Очистка куба
 	void clean();
