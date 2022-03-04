@@ -1,16 +1,16 @@
-#pragma once
+п»ї#pragma once
 #include <string>
 #include <vector>
 #include <map>
 #include <unordered_map>
 
 /**
- * @brief Результат добавления факта.
+ * @brief Р РµР·СѓР»СЊС‚Р°С‚ РґРѕР±Р°РІР»РµРЅРёСЏ С„Р°РєС‚Р°.
  */
 enum class add_result {
-	UNKNOWN_MEASURE = -1, // неизвестная метрика
-	ALREADY_EXIST, // факт уже существует
-	ADDED // факт добавлен
+	UNKNOWN_MEASURE = -1, // РЅРµРёР·РІРµСЃС‚РЅР°СЏ РјРµС‚СЂРёРєР°
+	ALREADY_EXIST, // С„Р°РєС‚ СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚
+	ADDED // С„Р°РєС‚ РґРѕР±Р°РІР»РµРЅ
 };
 
 class Dimension;
@@ -20,9 +20,9 @@ class DataPoint;
 class Selection;
 
 /**
- * @brief Куб.
+ * @brief РљСѓР±.
  * 
- * Класс для добавления и хранения данных.
+ * РљР»Р°СЃСЃ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ Рё С…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С….
  */
 class Cube{
 public:
@@ -31,33 +31,33 @@ public:
 
 	Cube();
 
-	// Добавление измерения
+	// Р”РѕР±Р°РІР»РµРЅРёРµ РёР·РјРµСЂРµРЅРёСЏ
 	bool add_Dimension(const std::string& a_dim_name);
 
-	// Добавление метрики
+	// Р”РѕР±Р°РІР»РµРЅРёРµ РјРµС‚СЂРёРєРё
 	bool add_Measure(const std::string& a_measure_name);
 
-	// Добавление факта
+	// Р”РѕР±Р°РІР»РµРЅРёРµ С„Р°РєС‚Р°
 	add_result add_Fact(double a_value, const std::string& a_measure_name, const std::vector<std::string>& a_positions_list);
 
-    // Очистка куба
+    // РћС‡РёСЃС‚РєР° РєСѓР±Р°
 	void clean();
 	
 	~Cube();
 
 private:
 
-	// Поиск метрики
+	// РџРѕРёСЃРє РјРµС‚СЂРёРєРё
 	std::vector<Measure*>::const_iterator find_measure(const std::string& a_measure_name);
 
-	// Очистка вектора указателей
+	// РћС‡РёСЃС‚РєР° РІРµРєС‚РѕСЂР° СѓРєР°Р·Р°С‚РµР»РµР№
 	template <class T>
 	void clean_vector(std::vector<T*>& a_vector);
-	// Контейнеры фактов/измерений/метрик/точек данных куба
+	// РљРѕРЅС‚РµР№РЅРµСЂС‹ С„Р°РєС‚РѕРІ/РёР·РјРµСЂРµРЅРёР№/РјРµС‚СЂРёРє/С‚РѕС‡РµРє РґР°РЅРЅС‹С… РєСѓР±Р°
 	std::multimap<std::pair<std::string, std::vector<std::string>>, Fact*> m_facts;
 	std::vector<Dimension*> m_dims;
 	std::vector<Measure*> m_measures;
 	std::vector<DataPoint*> m_points;
-	// Связанная выборка
+	// РЎРІСЏР·Р°РЅРЅР°СЏ РІС‹Р±РѕСЂРєР°
 	Selection* m_selection;
 };

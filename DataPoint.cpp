@@ -1,44 +1,44 @@
-#include "DataPoint.h"
+ï»¿#include "DataPoint.h"
 #include "Fact.h"
 #include "Dimension.h"
 #include "DimensionPosition.h"
 
 /**
- * @brief Êîíñòðóêòîð.
+ * @brief ÐšÐ¾Ð½ÑÑ‚Ñ€ÑƒÐºÑ‚Ð¾Ñ€.
  * 
- * @param [in,out] a_fact Ñâÿçàííûé ôàêò
- * @param [in,out] a_dim Ñâÿçàííûé èçìåðåíèå
- * @param [in,out] a_dim Ñâÿçàííàÿ îòìåòêà íà èçìåðåíèè
+ * @param [in,out] a_fact Ð¡Ð²ÑÐ·Ð°Ð½Ð½Ñ‹Ð¹ Ñ„Ð°ÐºÑ‚
+ * @param [in,out] a_dim Ð¡Ð²ÑÐ·Ð°Ð½Ð½Ñ‹Ð¹ Ð¸Ð·Ð¼ÐµÑ€ÐµÐ½Ð¸Ðµ
+ * @param [in,out] a_dim Ð¡Ð²ÑÐ·Ð°Ð½Ð½Ð°Ñ Ð¾Ñ‚Ð¼ÐµÑ‚ÐºÐ° Ð½Ð° Ð¸Ð·Ð¼ÐµÑ€ÐµÐ½Ð¸Ð¸
  */
 DataPoint::DataPoint(Fact* a_fact, Dimension* a_dim, DimensionPosition* a_dim_position) : m_fact(a_fact), m_dim(a_dim), m_dim_position(a_dim_position) {
-	// Äà¸ì óêàçàòåëü íà ýòó òî÷êó äàííûõ Ôàêòó è Èçìåðåíèþ, ñâÿçàííûì ñ ýòîé òî÷êîé äàííûõ
+	// Ð”Ð°Ñ‘Ð¼ ÑƒÐºÐ°Ð·Ð°Ñ‚ÐµÐ»ÑŒ Ð½Ð° ÑÑ‚Ñƒ Ñ‚Ð¾Ñ‡ÐºÑƒ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¤Ð°ÐºÑ‚Ñƒ Ð¸ Ð˜Ð·Ð¼ÐµÑ€ÐµÐ½Ð¸ÑŽ, ÑÐ²ÑÐ·Ð°Ð½Ð½Ñ‹Ð¼ Ñ ÑÑ‚Ð¾Ð¹ Ñ‚Ð¾Ñ‡ÐºÐ¾Ð¹ Ð´Ð°Ð½Ð½Ñ‹Ñ…
 	m_fact->push_DataPoint(this);
 	m_dim->push_DataPoint(this);
 	m_dim_position->push_DataPoint(m_fact->get_Measure_name(),this);
 }	
 
 /**
- * @brief Ïîëó÷åíèå èçìåðåíèÿ.
+ * @brief ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð¸Ð·Ð¼ÐµÑ€ÐµÐ½Ð¸Ñ.
  * 
- * @return Ñâÿçàííîå èçìåðåíèå
+ * @return Ð¡Ð²ÑÐ·Ð°Ð½Ð½Ð¾Ðµ Ð¸Ð·Ð¼ÐµÑ€ÐµÐ½Ð¸Ðµ
  */
 const Dimension* const DataPoint::get_Dimension() const {
 	return m_dim;
 }
 
 /**
- * @brief Ïîëó÷åíèå ôàêòà.
+ * @brief ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ñ„Ð°ÐºÑ‚Ð°.
  * 
- * @return Ñâÿçàííûé ôàêò
+ * @return Ð¡Ð²ÑÐ·Ð°Ð½Ð½Ñ‹Ð¹ Ñ„Ð°ÐºÑ‚
  */
 Fact* const DataPoint::get_Fact() const {
 	return m_fact;
 }
 
 /**
- * @brief Ïîëó÷åíèå íàçâàíèÿ îòìåòêè â ñâÿçàííîì èçìåðåíèè.
+ * @brief ÐŸÐ¾Ð»ÑƒÑ‡ÐµÐ½Ð¸Ðµ Ð½Ð°Ð·Ð²Ð°Ð½Ð¸Ñ Ð¾Ñ‚Ð¼ÐµÑ‚ÐºÐ¸ Ð² ÑÐ²ÑÐ·Ð°Ð½Ð½Ð¾Ð¼ Ð¸Ð·Ð¼ÐµÑ€ÐµÐ½Ð¸Ð¸.
  * 
- * @return Íàçâàíèå îòìåòêè íà ñâÿçàííîì èçìåðåíèè
+ * @return ÐÐ°Ð·Ð²Ð°Ð½Ð¸Ðµ Ð¾Ñ‚Ð¼ÐµÑ‚ÐºÐ¸ Ð½Ð° ÑÐ²ÑÐ·Ð°Ð½Ð½Ð¾Ð¼ Ð¸Ð·Ð¼ÐµÑ€ÐµÐ½Ð¸Ð¸
  */
 const std::string& DataPoint::get_dim_position_name() const {
 	return m_dim_position->get_name();

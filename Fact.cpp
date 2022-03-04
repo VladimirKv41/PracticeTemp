@@ -1,57 +1,57 @@
-#include "Fact.h"
+п»ї#include "Fact.h"
 #include "Measure.h"
 
 
 /**
- * @brief Конструктор.
+ * @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.
  * 
- * @param [in] a_value Значение
- * @param [in,out] a_mes Метрика
+ * @param [in] a_value Р—РЅР°С‡РµРЅРёРµ
+ * @param [in,out] a_mes РњРµС‚СЂРёРєР°
  */
 Fact::Fact(double a_value,Measure* a_mes) : m_value(a_value), m_mes(a_mes) {
 	
 }
 
 /**
- * @brief Добавление связанной точки данных.
+ * @brief Р”РѕР±Р°РІР»РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕР№ С‚РѕС‡РєРё РґР°РЅРЅС‹С….
  * 
- * @param [in,out] a_point Точка данных
+ * @param [in,out] a_point РўРѕС‡РєР° РґР°РЅРЅС‹С…
  */
 void Fact::push_DataPoint(DataPoint* a_point) {
 	m_points.push_back(a_point);
 }
 
 /**
- * @brief Получение вектора связанных точек данных.
+ * @brief РџРѕР»СѓС‡РµРЅРёРµ РІРµРєС‚РѕСЂР° СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С….
  * 
- * @return Вектор связанных точек данных
+ * @return Р’РµРєС‚РѕСЂ СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
  */
 const std::vector<DataPoint*>& Fact::get_DataPoints() const {
 	return m_points;
 }
 
 /**
- * @brief Получение значения факта.
+ * @brief РџРѕР»СѓС‡РµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ С„Р°РєС‚Р°.
  * 
- * @return Значения факта
+ * @return Р—РЅР°С‡РµРЅРёСЏ С„Р°РєС‚Р°
  */
 double Fact::get_value() const {
 	return m_value;
 }
 
 /**
- * @brief Получение названия метрики факта.
+ * @brief РџРѕР»СѓС‡РµРЅРёРµ РЅР°Р·РІР°РЅРёСЏ РјРµС‚СЂРёРєРё С„Р°РєС‚Р°.
  * 
- * @return Название метрики
+ * @return РќР°Р·РІР°РЅРёРµ РјРµС‚СЂРёРєРё
  */
 const std::string& Fact::get_Measure_name() const {
 	return m_mes->get_name();
 }
 
 /**
- * @brief Получение связанной метрики.
+ * @brief РџРѕР»СѓС‡РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕР№ РјРµС‚СЂРёРєРё.
  * 
- * @return Связанная метрика
+ * @return РЎРІСЏР·Р°РЅРЅР°СЏ РјРµС‚СЂРёРєР°
  */
 const Measure* const Fact::get_Measure() const {
 	return m_mes;
