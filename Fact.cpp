@@ -1,58 +1,58 @@
-п»ї#include "Fact.h"
-#include "Measure.h"
+#include "Fact.h"
+#include "Metric.h"
 
 
 /**
- * @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.
- * 
- * @param [in] a_value Р—РЅР°С‡РµРЅРёРµ
- * @param [in,out] a_mes РњРµС‚СЂРёРєР°
+ * @brief Конструктор.
+ *
+ * @param [in] a_value Значение
+ * @param [in,out] a_mes Метрика
  */
-Fact::Fact(double a_value,Measure* a_mes) : m_value(a_value), m_mes(a_mes) {
-	
+Fact::Fact(double a_value, Metric* a_mes) : m_value(a_value), m_mes(a_mes) {
+
 }
 
 /**
- * @brief Р”РѕР±Р°РІР»РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕР№ С‚РѕС‡РєРё РґР°РЅРЅС‹С….
- * 
- * @param [in,out] a_point РўРѕС‡РєР° РґР°РЅРЅС‹С…
+ * @brief Добавление связанной точки данных.
+ *
+ * @param [in,out] a_point Точка данных
  */
-void Fact::push_DataPoint(DataPoint* a_point) {
+void Fact::push_FactClassifier(FactClassifier* a_point) {
 	m_points.push_back(a_point);
 }
 
 /**
- * @brief РџРѕР»СѓС‡РµРЅРёРµ РІРµРєС‚РѕСЂР° СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С….
- * 
- * @return Р’РµРєС‚РѕСЂ СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
+ * @brief Получение вектора связанных точек данных.
+ *
+ * @return Вектор связанных точек данных
  */
-const std::vector<DataPoint*>& Fact::get_DataPoints() const {
+const std::vector<FactClassifier*>& Fact::get_FactClassifiers() const {
 	return m_points;
 }
 
 /**
- * @brief РџРѕР»СѓС‡РµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ С„Р°РєС‚Р°.
- * 
- * @return Р—РЅР°С‡РµРЅРёСЏ С„Р°РєС‚Р°
+ * @brief Получение значения факта.
+ *
+ * @return Значения факта
  */
 double Fact::get_value() const {
 	return m_value;
 }
 
 /**
- * @brief РџРѕР»СѓС‡РµРЅРёРµ РЅР°Р·РІР°РЅРёСЏ РјРµС‚СЂРёРєРё С„Р°РєС‚Р°.
- * 
- * @return РќР°Р·РІР°РЅРёРµ РјРµС‚СЂРёРєРё
+ * @brief Получение названия метрики факта.
+ *
+ * @return Название метрики
  */
-const std::string& Fact::get_Measure_name() const {
+const std::string& Fact::get_Metric_name() const {
 	return m_mes->get_name();
 }
 
 /**
- * @brief РџРѕР»СѓС‡РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕР№ РјРµС‚СЂРёРєРё.
- * 
- * @return РЎРІСЏР·Р°РЅРЅР°СЏ РјРµС‚СЂРёРєР°
+ * @brief Получение связанной метрики.
+ *
+ * @return Связанная метрика
  */
-const Measure* const Fact::get_Measure() const {
+const Metric* const Fact::get_Metric() const {
 	return m_mes;
 }

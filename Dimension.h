@@ -1,47 +1,47 @@
-п»ї#pragma once
+#pragma once
 #include <string>
 #include <vector>
 #include <map>
 
-class DataPoint;
+class FactClassifier;
 class DimensionMark;
 
 /**
- * @brief РР·РјРµСЂРµРЅРёРµ.
- * 
- * РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ Рё СЂР°Р±РѕС‚С‹ СЃ РѕРґРЅРѕР№ РёР· "РѕСЃРµР№" РєСѓР±Р°.
+ * @brief Измерение.
+ *
+ * Класс для хранения и работы с одной из "осей" куба.
  */
 class Dimension {
 public:
 
-	Dimension(const std::string &a_name);
+	Dimension(const std::string& a_name);
 
-	// Р”РѕР±Р°РІР»РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕР№ С‚РѕС‡РєРё РґР°РЅРЅС‹С…
-	void push_DataPoint(DataPoint* a_point);
+	// Добавление связанной точки данных
+	void push_FactClassifier(FactClassifier* a_point);
 
-	// РџРѕР»СѓС‡РµРЅРёРµ РІРµРєС‚РѕСЂР° СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
-	const std::vector<DataPoint*>& get_DataPoints() const;
+	// Получение вектора связанных точек данных
+	const std::vector<FactClassifier*>& get_FactClassifiers() const;
 
-	// РџРѕР»СѓС‡РµРЅРёРµ РѕС‚РјРµС‚РєРё РІ РёР·РјРµСЂРµРЅРёРё
-	DimensionMark* const get_DimensionPosition(const std::string &a_mark);
+	// Получение отметки в измерении
+	DimensionMark* const get_DimensionPosition(const std::string& a_mark);
 
-	// РџРѕРёСЃРє РѕС‚РјРµС‚РєРё РІ РёР·РјРµСЂРµРЅРёРё
-	bool search_mark(const std::string &a_mark) const;
+	// Поиск отметки в измерении
+	bool search_mark(const std::string& a_mark) const;
 
-	// РџРѕР»СѓС‡РµРЅРёРµ РЅР°Р·РІР°РЅРёСЏ РёР·РјРµСЂРµРЅРёСЏ
+	// Получение названия измерения
 	const std::string& get_name() const;
 
-	// РџРѕР»СѓС‡РµРЅРёРµ РјР°СЃСЃРёРІР° РѕС‚РјРµС‚РѕРє РЅР° РёР·РјРµСЂРµРЅРёРё
+	// Получение массива отметок на измерении
 	const std::map<std::string, DimensionMark*>& get_marks() const;
 
 	~Dimension();
-	
+
 private:
-	// РњР°СЃСЃРёРІ РѕС‚РјРµС‚РѕРє РЅР° РёР·РјРµСЂРµРЅРёРё
-	// РљР»СЋС‡: РЅР°Р·РІР°РЅРёРµ РѕС‚РјРµС‚РѕРє
-	std::map<std::string,DimensionMark*> m_marks_map;
-	// РќР°Р·РІР°РЅРёРµ РёР·РјРµСЂРµРЅРёСЏ
+	// Массив отметок на измерении
+	// Ключ: название отметок
+	std::map<std::string, DimensionMark*> m_marks_map;
+	// Название измерения
 	std::string m_name;
-	// Р’РµРєС‚РѕСЂ СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
-	std::vector<DataPoint*> m_points;
+	// Вектор связанных точек данных
+	std::vector<FactClassifier*> m_points;
 };

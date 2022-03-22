@@ -1,63 +1,63 @@
-п»ї#pragma once
+#pragma once
 #include <string>
 #include <vector>
 #include <map>
 #include <unordered_map>
 
 /**
- * @brief Р РµР·СѓР»СЊС‚Р°С‚ РґРѕР±Р°РІР»РµРЅРёСЏ С„Р°РєС‚Р°.
+ * @brief Результат добавления факта.
  */
 enum class add_result {
-	UNKNOWN_MEASURE = -1, // РЅРµРёР·РІРµСЃС‚РЅР°СЏ РјРµС‚СЂРёРєР°
-	ALREADY_EXIST, // С„Р°РєС‚ СѓР¶Рµ СЃСѓС‰РµСЃС‚РІСѓРµС‚
-	ADDED // С„Р°РєС‚ РґРѕР±Р°РІР»РµРЅ
+	UNKNOWN_MEASURE = -1, // неизвестная метрика
+	ALREADY_EXIST, // факт уже существует
+	ADDED // факт добавлен
 };
 
 class Dimension;
 class Fact;
-class Measure;
-class DataPoint;
+class Metric;
+class FactClassifier;
 class Selection;
 
 /**
- * @brief РљСѓР±.
- * 
- * РљР»Р°СЃСЃ РґР»СЏ РґРѕР±Р°РІР»РµРЅРёСЏ Рё С…СЂР°РЅРµРЅРёСЏ РґР°РЅРЅС‹С….
+ * @brief Куб.
+ *
+ * Класс для добавления и хранения данных.
  */
-class Cube{
+class Cube {
 public:
 
 	friend Selection;
 
 	Cube();
 
-	// Р”РѕР±Р°РІР»РµРЅРёРµ РёР·РјРµСЂРµРЅРёСЏ
+	// Добавление измерения
 	bool add_Dimension(const std::string& a_dim_name);
 
-	// Р”РѕР±Р°РІР»РµРЅРёРµ РјРµС‚СЂРёРєРё
-	bool add_Measure(const std::string& a_measure_name);
+	// Добавление метрики
+	bool add_Metric(const std::string& a_metric_name);
 
-	// Р”РѕР±Р°РІР»РµРЅРёРµ С„Р°РєС‚Р°
-	add_result add_Fact(double a_value, const std::string& a_measure_name, const std::vector<std::string>& a_marks_list);
+	// Добавление факта
+	add_result add_Fact(double a_value, const std::string& a_metric_name, const std::vector<std::string>& a_marks_list);
 
-    // РћС‡РёСЃС‚РєР° РєСѓР±Р°
+	// Очистка куба
 	void clean();
-	
+
 	~Cube();
 
 private:
 
-	// РџРѕРёСЃРє РјРµС‚СЂРёРєРё
-	std::vector<Measure*>::const_iterator find_measure(const std::string& a_measure_name);
+	// Поиск метрики
+	std::vector<Metric*>::const_iterator find_metric(const std::string& a_metric_name);
 
-	// РћС‡РёСЃС‚РєР° РІРµРєС‚РѕСЂР° СѓРєР°Р·Р°С‚РµР»РµР№
+	// Очистка вектора указателей
 	template <class T>
 	void clean_vector(std::vector<T*>& a_vector);
-	// РљРѕРЅС‚РµР№РЅРµСЂС‹ С„Р°РєС‚РѕРІ/РёР·РјРµСЂРµРЅРёР№/РјРµС‚СЂРёРє/С‚РѕС‡РµРє РґР°РЅРЅС‹С… РєСѓР±Р°
+	// Контейнеры фактов/измерений/метрик/точек данных куба
 	std::multimap<std::pair<std::string, std::vector<std::string>>, Fact*> m_facts;
 	std::vector<Dimension*> m_dims;
-	std::vector<Measure*> m_measures;
-	std::vector<DataPoint*> m_points;
-	// РЎРІСЏР·Р°РЅРЅР°СЏ РІС‹Р±РѕСЂРєР°
+	std::vector<Metric*> m_metrics;
+	std::vector<FactClassifier*> m_points;
+	// Связанная выборка
 	Selection* m_selection;
 };

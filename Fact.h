@@ -1,41 +1,41 @@
-п»ї#pragma once
+#pragma once
 #include <vector>
 #include <string>
 
 class Dimension;
-class Measure;
-class DataPoint;
+class Metric;
+class FactClassifier;
 
 /**
- * @brief Р¤Р°РєС‚.
- * 
- * РљР»Р°СЃСЃ С…СЂР°РЅСЏС‰РёР№ Р·РЅР°С‡РµРЅРёРµ Рё РµРіРѕ РјРµС‚СЂРёРєСѓ.
+ * @brief Факт.
+ *
+ * Класс хранящий значение и его метрику.
  */
 class Fact {
 public:
 
-	Fact(double a_value,Measure* a_mes);
+	Fact(double a_value, Metric* a_mes);
 
-	// Р”РѕР±Р°РІР»РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕР№ С‚РѕС‡РєРё РґР°РЅРЅС‹С…
-	void push_DataPoint(DataPoint* a_point);
+	// Добавление связанной точки данных
+	void push_FactClassifier(FactClassifier* a_point);
 
-	// РџРѕР»СѓС‡РµРЅРёРµ РІРµРєС‚РѕСЂР° СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
-	const std::vector<DataPoint*>& get_DataPoints() const;
+	// Получение вектора связанных точек данных
+	const std::vector<FactClassifier*>& get_FactClassifiers() const;
 
-	// РџРѕР»СѓС‡РµРЅРёРµ Р·РЅР°С‡РµРЅРёСЏ С„Р°РєС‚Р°
+	// Получение значения факта
 	double get_value() const;
 
-	// РџРѕР»СѓС‡РµРЅРёРµ РЅР°Р·РІР°РЅРёСЏ РјРµС‚СЂРёРєРё С„Р°РєС‚Р°
-	const std::string& get_Measure_name() const;
+	// Получение названия метрики факта
+	const std::string& get_Metric_name() const;
 
-	// РџРѕР»СѓС‡РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕР№ РјРµС‚СЂРёРєРё
-	const Measure* const get_Measure() const;
+	// Получение связанной метрики
+	const Metric* const get_Metric() const;
 
 private:
-	// Р—РЅР°С‡РµРЅРёРµ С„Р°РєС‚Р°
+	// Значение факта
 	double m_value;
-	// РЎРІСЏР·Р°РЅРЅР°СЏ РјРµС‚СЂРёРєР°
-	Measure* m_mes;
-	// Р’РµРєС‚РѕСЂ СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
-	std::vector<DataPoint*> m_points;
+	// Связанная метрика
+	Metric* m_mes;
+	// Вектор связанных точек данных
+	std::vector<FactClassifier*> m_points;
 };
