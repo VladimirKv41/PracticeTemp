@@ -1,7 +1,3 @@
-﻿// CMakeCube.cpp: определяет точку входа для приложения.
-//
-
-#include "CMakeCube.h"
 
 #include <iostream>
 #include <vector>
