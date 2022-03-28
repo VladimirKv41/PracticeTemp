@@ -1,20 +1,13 @@
-﻿# CMakeList.txt: проект CMake для CMakeCube;
-
-cmake_minimum_required (VERSION 2.8)
+﻿cmake_minimum_required (VERSION 2.8)
 
 project (CMakeCube)
 
-include_directories(${PROJECT_SOURCE_DIR}/include/)
+set(CMAKE_CXX_STANDARD 11)
 
-add_library(Cube STATIC "Cube.cpp")
-add_library(Selection STATIC "Selection.cpp")
-add_library(Fact STATIC "Fact.cpp")
-add_library(FactClassifier STATIC "FactClassifier.cpp")
-add_library(Dimension STATIC "Dimension.cpp")
-add_library(DimensionMark STATIC "DimensionMark.cpp")
-add_library(Metric STATIC "Metric.cpp")
+add_subdirectory(Tests)
 
-add_executable ( CMakeCube	"Source.cpp")
+add_subdirectory(gtest)
 
-target_link_libraries(CMakeCube Cube Fact FactClassifier 
- Selection Dimension DimensionMark Metric)
+add_executable ( CMakeCube "Source.cpp" "Cube.cpp" "Selection.cpp" "Fact.cpp" "FactClassifier.cpp" "Dimension.cpp" "DimensionMark.cpp" "Metric.cpp")
+
+add_library(Cube_libs STATIC "Cube.cpp" "Selection.cpp" "Fact.cpp" "FactClassifier.cpp" "Dimension.cpp" "DimensionMark.cpp" "Metric.cpp")
