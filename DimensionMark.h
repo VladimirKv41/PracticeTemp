@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <string>
 #include <unordered_map>
 
@@ -7,29 +7,29 @@ class Metric;
 class FactClassifier;
 
 /**
- * @brief Отметка (на измерении).
+ * @brief РћС‚РјРµС‚РєР° (РЅР° РёР·РјРµСЂРµРЅРёРё).
  *
- * Класс хранящий точки данных отметок на измерении и их метрику.
+ * РљР»Р°СЃСЃ С…СЂР°РЅСЏС‰РёР№ С‚РѕС‡РєРё РґР°РЅРЅС‹С… РѕС‚РјРµС‚РѕРє РЅР° РёР·РјРµСЂРµРЅРёРё Рё РёС… РјРµС‚СЂРёРєСѓ.
  */
 class DimensionMark {
 public:
 
 	DimensionMark(const std::string& a_name);
 
-	// Добавление связанной точки данных
+	// Р”РѕР±Р°РІР»РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕР№ С‚РѕС‡РєРё РґР°РЅРЅС‹С…
 	void push_FactClassifier(const std::string& a_meas, FactClassifier* a_point);
 
-	// Получение названия отметки на измерении
+	// РџРѕР»СѓС‡РµРЅРёРµ РЅР°Р·РІР°РЅРёСЏ РѕС‚РјРµС‚РєРё РЅР° РёР·РјРµСЂРµРЅРёРё
 	const std::string& get_name() const;
 
-	// Получение массива связанных точек данных
+	// РџРѕР»СѓС‡РµРЅРёРµ РјР°СЃСЃРёРІР° СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
 	const std::unordered_multimap<std::string, FactClassifier*>& get_FactClassifiers() const;
 
 private:
 
-	// Название отметки
+	// РќР°Р·РІР°РЅРёРµ РѕС‚РјРµС‚РєРё
 	std::string m_name;
-	// Массив связанных точек данных
-	// Ключ: название метрики
+	// РњР°СЃСЃРёРІ СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
+	// РљР»СЋС‡: РЅР°Р·РІР°РЅРёРµ РјРµС‚СЂРёРєРё
 	std::unordered_multimap<std::string, FactClassifier*> m_points;
 };

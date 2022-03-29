@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <iostream>
 
 class Time;
@@ -6,9 +6,9 @@ class Date;
 struct DateTime;
 
 /**
- * @brief Класс типизации.
+ * @brief В Р»Р°СЃСЃ С‚РёРїРёР·Р°С†РёРё.
  *
- * Класс для хранения значений различных типов данных Фактов.
+ * В Р»Р°СЃСЃ РґР»В¤ С…СЂР°РЅРµРЅРёВ¤ Р·РЅР°С‡РµРЅРёР№ СЂР°Р·Р»РёС‡РЅС‹С… С‚РёРїРѕРІ РґР°РЅРЅС‹С… вЂР°РєС‚РѕРІ.
  */
 class Variant {
 public:
@@ -30,6 +30,9 @@ public:
 	Variant(Date* a_var);
 
 	Variant(DateTime* a_var);
+
+	template <typename T>
+	const T& get_value() const;
 
 	const std::string& to_String() const;
 	

@@ -20,7 +20,6 @@ int main() {
 	Selection* select = new Selection(cube);
 	delete cube;
 	delete select;
-
 	_CrtDumpMemoryLeaks();
 	return 0;
 }

@@ -1,40 +1,40 @@
-#include "Dimension.h"
+п»ї#include "Dimension.h"
 #include "DimensionMark.h"
 
 /**
- * @brief Конструктор.
+ * @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.
  *
- * @param [in] a_name Название измерения
+ * @param [in] a_name РќР°Р·РІР°РЅРёРµ РёР·РјРµСЂРµРЅРёСЏ
  */
 Dimension::Dimension(const std::string& a_name) : m_name(a_name) {
 
 }
 
 /**
- * @brief Добавление связанной точки данных.
+ * @brief Р”РѕР±Р°РІР»РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕР№ С‚РѕС‡РєРё РґР°РЅРЅС‹С….
  *
- * @param [in,out] a_point Точка данных
+ * @param [in,out] a_point РўРѕС‡РєР° РґР°РЅРЅС‹С…
  */
 void Dimension::push_FactClassifier(FactClassifier* a_point) {
 	m_points.push_back(a_point);
 }
 
 /**
- * @brief Получение вектора связанных точек данных.
+ * @brief РџРѕР»СѓС‡РµРЅРёРµ РІРµРєС‚РѕСЂР° СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С….
  *
- * @return Вектор всех точек данных связанных с этим измерением
+ * @return Р’РµРєС‚РѕСЂ РІСЃРµС… С‚РѕС‡РµРє РґР°РЅРЅС‹С… СЃРІСЏР·Р°РЅРЅС‹С… СЃ СЌС‚РёРј РёР·РјРµСЂРµРЅРёРµРј
  */
 const std::vector<FactClassifier*>& Dimension::get_FactClassifiers() const {
 	return m_points;
 }
 
 /**
- * @brief Получение отметок на измерении.
+ * @brief РџРѕР»СѓС‡РµРЅРёРµ РѕС‚РјРµС‚РѕРє РЅР° РёР·РјРµСЂРµРЅРёРё.
  *
- * Если отметка не существует, то сначала создаётся.
+ * Р•СЃР»Рё РѕС‚РјРµС‚РєР° РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚, С‚Рѕ СЃРЅР°С‡Р°Р»Р° СЃРѕР·РґР°С‘С‚СЃСЏ.
  *
- * @param [in] a_mark Название отметки
- * @return Отметка
+ * @param [in] a_mark РќР°Р·РІР°РЅРёРµ РѕС‚РјРµС‚РєРё
+ * @return РћС‚РјРµС‚РєР°
  */
 DimensionMark* const Dimension::get_DimensionPosition(const std::string& a_mark) {
 	if (m_marks_map.find(a_mark) == m_marks_map.end()) {
@@ -46,10 +46,10 @@ DimensionMark* const Dimension::get_DimensionPosition(const std::string& a_mark)
 }
 
 /**
- * @brief Поиск отметки в измерении.
+ * @brief РџРѕРёСЃРє РѕС‚РјРµС‚РєРё РІ РёР·РјРµСЂРµРЅРёРё.
  *
- * @param [in] a_mark Название отметка
- * @return Существует отметка или нет
+ * @param [in] a_mark РќР°Р·РІР°РЅРёРµ РѕС‚РјРµС‚РєР°
+ * @return РЎСѓС‰РµСЃС‚РІСѓРµС‚ РѕС‚РјРµС‚РєР° РёР»Рё РЅРµС‚
  */
 bool Dimension::search_mark(const std::string& a_mark) const {
 	if (m_marks_map.find(a_mark) == m_marks_map.end()) {
@@ -60,18 +60,18 @@ bool Dimension::search_mark(const std::string& a_mark) const {
 }
 
 /**
- * @brief Получение названия измерения.
+ * @brief РџРѕР»СѓС‡РµРЅРёРµ РЅР°Р·РІР°РЅРёСЏ РёР·РјРµСЂРµРЅРёСЏ.
  *
- * @return Название измерения
+ * @return РќР°Р·РІР°РЅРёРµ РёР·РјРµСЂРµРЅРёСЏ
  */
 const std::string& Dimension::get_name() const {
 	return m_name;
 }
 
 /**
- * @brief Получение массива отметок на измерении.
+ * @brief РџРѕР»СѓС‡РµРЅРёРµ РјР°СЃСЃРёРІР° РѕС‚РјРµС‚РѕРє РЅР° РёР·РјРµСЂРµРЅРёРё.
  *
- * @return Массив отметок на измерении
+ * @return РњР°СЃСЃРёРІ РѕС‚РјРµС‚РѕРє РЅР° РёР·РјРµСЂРµРЅРёРё
  */
 const std::map<std::string, DimensionMark*>& Dimension::get_marks() const {
 	return m_marks_map;

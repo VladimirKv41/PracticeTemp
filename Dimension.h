@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include <string>
 #include <vector>
 #include <map>
@@ -7,41 +7,41 @@ class FactClassifier;
 class DimensionMark;
 
 /**
- * @brief Измерение.
+ * @brief РР·РјРµСЂРµРЅРёРµ.
  *
- * Класс для хранения и работы с одной из "осей" куба.
+ * РљР»Р°СЃСЃ РґР»СЏ С…СЂР°РЅРµРЅРёСЏ Рё СЂР°Р±РѕС‚С‹ СЃ РѕРґРЅРѕР№ РёР· "РѕСЃРµР№" РєСѓР±Р°.
  */
 class Dimension {
 public:
 
 	Dimension(const std::string& a_name);
 
-	// Добавление связанной точки данных
+	// Р”РѕР±Р°РІР»РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕР№ С‚РѕС‡РєРё РґР°РЅРЅС‹С…
 	void push_FactClassifier(FactClassifier* a_point);
 
-	// Получение вектора связанных точек данных
+	// РџРѕР»СѓС‡РµРЅРёРµ РІРµРєС‚РѕСЂР° СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
 	const std::vector<FactClassifier*>& get_FactClassifiers() const;
 
-	// Получение отметки в измерении
+	// РџРѕР»СѓС‡РµРЅРёРµ РѕС‚РјРµС‚РєРё РІ РёР·РјРµСЂРµРЅРёРё
 	DimensionMark* const get_DimensionPosition(const std::string& a_mark);
 
-	// Поиск отметки в измерении
+	// РџРѕРёСЃРє РѕС‚РјРµС‚РєРё РІ РёР·РјРµСЂРµРЅРёРё
 	bool search_mark(const std::string& a_mark) const;
 
-	// Получение названия измерения
+	// РџРѕР»СѓС‡РµРЅРёРµ РЅР°Р·РІР°РЅРёСЏ РёР·РјРµСЂРµРЅРёСЏ
 	const std::string& get_name() const;
 
-	// Получение массива отметок на измерении
+	// РџРѕР»СѓС‡РµРЅРёРµ РјР°СЃСЃРёРІР° РѕС‚РјРµС‚РѕРє РЅР° РёР·РјРµСЂРµРЅРёРё
 	const std::map<std::string, DimensionMark*>& get_marks() const;
 
 	~Dimension();
 
 private:
-	// Массив отметок на измерении
-	// Ключ: название отметок
+	// РњР°СЃСЃРёРІ РѕС‚РјРµС‚РѕРє РЅР° РёР·РјРµСЂРµРЅРёРё
+	// РљР»СЋС‡: РЅР°Р·РІР°РЅРёРµ РѕС‚РјРµС‚РѕРє
 	std::map<std::string, DimensionMark*> m_marks_map;
-	// Название измерения
+	// РќР°Р·РІР°РЅРёРµ РёР·РјРµСЂРµРЅРёСЏ
 	std::string m_name;
-	// Вектор связанных точек данных
+	// Р’РµРєС‚РѕСЂ СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
 	std::vector<FactClassifier*> m_points;
 };

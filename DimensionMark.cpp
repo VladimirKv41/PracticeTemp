@@ -1,37 +1,37 @@
-#include "DimensionMark.h"
+п»ї#include "DimensionMark.h"
 
 /**
- * @brief Конструктор.
+ * @brief РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ.
  *
- * @param [in,out] a_name Название отметки на измерении
+ * @param [in,out] a_name РќР°Р·РІР°РЅРёРµ РѕС‚РјРµС‚РєРё РЅР° РёР·РјРµСЂРµРЅРёРё
  */
 DimensionMark::DimensionMark(const std::string& a_name) : m_name(a_name) {
 
 }
 
 /**
- * @brief Добавление связанной точки данных.
+ * @brief Р”РѕР±Р°РІР»РµРЅРёРµ СЃРІСЏР·Р°РЅРЅРѕР№ С‚РѕС‡РєРё РґР°РЅРЅС‹С….
  *
- * @param [in,out] a_meas Название метрики
- * @param [in,out] a_point Точка данных
+ * @param [in,out] a_meas РќР°Р·РІР°РЅРёРµ РјРµС‚СЂРёРєРё
+ * @param [in,out] a_point РўРѕС‡РєР° РґР°РЅРЅС‹С…
  */
 void DimensionMark::push_FactClassifier(const std::string& a_meas, FactClassifier* a_point) {
 	m_points.insert({ a_meas,a_point });
 }
 
 /**
- * @brief Получение названия отметки на измерении.
+ * @brief РџРѕР»СѓС‡РµРЅРёРµ РЅР°Р·РІР°РЅРёСЏ РѕС‚РјРµС‚РєРё РЅР° РёР·РјРµСЂРµРЅРёРё.
  *
- * @return Название отметки на измерении
+ * @return РќР°Р·РІР°РЅРёРµ РѕС‚РјРµС‚РєРё РЅР° РёР·РјРµСЂРµРЅРёРё
  */
 const std::string& DimensionMark::get_name() const {
 	return m_name;
 }
 
 /**
- * @brief Получение массива связанных точек данных.
+ * @brief РџРѕР»СѓС‡РµРЅРёРµ РјР°СЃСЃРёРІР° СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С….
  *
- * @return Массив связанных точек данных
+ * @return РњР°СЃСЃРёРІ СЃРІСЏР·Р°РЅРЅС‹С… С‚РѕС‡РµРє РґР°РЅРЅС‹С…
  */
 const std::unordered_multimap<std::string, FactClassifier*>& DimensionMark::get_FactClassifiers() const {
 	return m_points;
