@@ -2,6 +2,9 @@
 #include "cube.h"
 #include "selection.h"
 #include "variant.h"
+#include "time.h"
+#include "date.h"
+#include "datetime.h"
 
 double facts_temp[5][20] =
 {
@@ -356,10 +359,65 @@ TEST(TestSelection, Clean) {
 	delete select;
 }
 
-TEST(TestVariant, Clean) {
+TEST(TestVariant, INT64) {
+	Variant var((int64_t)1560);
+	EXPECT_EQ(var.getvalue<int64_t>(),1560) << "Wrong value";
+	EXPECT_EQ(var.getvaluetype(), var_type::INT64) << "Wrong value type";
+}
+
+TEST(TestVariant, UINT64) {
 	Variant var((uint64_t)1560);
-	std::cout << var.getvalue<uint64_t>() << std::endl;
-	//std::cout << static_cast<int>(var.getvaluetype()) << std::endl;
+	EXPECT_EQ(var.getvalue<uint64_t>(), 1560) << "Wrong value";
+	EXPECT_EQ(var.getvaluetype(), var_type::UINT64) << "Wrong value type";
+}
+
+TEST(TestVariant, Boolean) {
+	Variant var(false);
+	EXPECT_EQ(var.getvalue<bool>(), false) << "Wrong value";
+	EXPECT_EQ(var.getvaluetype(), var_type::BOOL) << "Wrong value type";
+}
+
+TEST(TestVariant, LongDouble) {
+	Variant var((long double)344.55);
+	EXPECT_EQ(var.getvalue<long double>(), 344.55) << "Wrong value";
+	EXPECT_EQ(var.getvaluetype(), var_type::LDOUBLE) << "Wrong value type";
+}
+
+TEST(TestVariant, Character) {
+	Variant var('a');
+	EXPECT_EQ(var.getvalue<char>(), 'a') << "Wrong value";
+	EXPECT_EQ(var.getvaluetype(), var_type::CHAR) << "Wrong value type";
+}
+
+TEST(TestVariant, String) {
+	Variant var((std::string)"String Строка");
+	EXPECT_EQ(var.getvalue<std::string>(), "String Строка") << "Wrong value";
+	EXPECT_EQ(var.getvaluetype(), var_type::STRING) << "Wrong value type";
+}
+
+TEST(TestVariant, WideString) {
+	Variant var((std::wstring)L"String Строка");
+	EXPECT_EQ(var.getvalue<std::wstring>(), L"String Строка") << "Wrong value";
+	EXPECT_EQ(var.getvaluetype(), var_type::WSTRING) << "Wrong value type";
+}
+
+TEST(TestVariant, TIME) {
+	Variant var(Time(23,46,00));
+	EXPECT_EQ(var.getvalue<Time>(), Time(23, 46, 00)) << "Wrong value";
+	EXPECT_EQ(var.getvaluetype(), var_type::TIME) << "Wrong value type";
+}
+
+TEST(TestVariant, DATE) {
+	Variant var(Date(23, 2, 2000));
+	EXPECT_EQ(var.getvalue<Date>(), Date(23, 2, 2000)) << "Wrong value";
+	EXPECT_EQ(var.getvaluetype(), var_type::DATE) << "Wrong value type";
+}
+
+TEST(TestVariant, DATETIME) {
+	Variant var(DateTime{Date(23, 2, 2000), Time(23, 46, 00) });
+	DateTime v = {Date(23, 2, 2000),Time(23, 46, 00)};
+	EXPECT_TRUE(var.getvalue<DateTime>() == v) << "Wrong value";
+	EXPECT_EQ(var.getvaluetype(), var_type::DATETIME) << "Wrong value type";
 }
 
 TEST(StressTest, MakeTimeFor_3650000_Elements) {
@@ -430,7 +488,7 @@ TEST(StressTest, MakeTimeFor_3650000_Elements) {
 	for (auto it = mins.begin(); it != mins.end(); it++) {
 		std::cout << *it << " ";
 	}
-	SUCCEED();
 	delete cube;
 	delete select;
+	SUCCEED();
 }

@@ -21,6 +21,9 @@ public:
 	// Возращение дня из даты.
 	uint8_t getday() const;
 
+	// Перегрузка оператора сравнения == для класса Date.
+	friend bool operator== (const Date& a_date_1, const Date& a_date_2);
+
 private:
 	// Год, месяц, день
 	uint16_t m_year;

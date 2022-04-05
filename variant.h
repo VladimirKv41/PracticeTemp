@@ -44,11 +44,11 @@ public:
 
 	Variant(std::wstring& a_var);
 
-	Variant(Time* a_var);
+	Variant(Time a_var);
 
-	Variant(Date* a_var);
+	Variant(Date a_var);
 
-	Variant(DateTime* a_var);
+	Variant(DateTime a_var);
 
 	// Возвращение значения типа данных.
 	template <typename T>
@@ -59,6 +59,11 @@ public:
 
 	// Перегрузка оператора сравнения == для класса Variant.
 	friend bool operator== (const Variant& a_variant_1, const Variant& a_variant_2);
+
+	// Перегрузка оператора присваивания == для класса Variant.
+	Variant& operator= (const Variant& a_variant);
+
+	~Variant();
 
 private:
 	// Идентификатор выбранного (при инициализации) типа данныха (перечислитель)

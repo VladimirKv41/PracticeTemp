@@ -1,12 +1,10 @@
 ﻿#include "variant.h"
 #include "time.h"
 #include "date.h"
+#include "datetime.h"
 
-// структура, объединяющая дату и время
-struct DateTime {
-	Date date;
-	Time time;
-};
+
+
 
 /**
  * @brief Конструктор для знакового 64-битного целого.
@@ -59,7 +57,7 @@ Variant::Variant(char a_var) : m_var_type(var_type::CHAR), m_pointer_to_value(ne
  * @param [in] a_var Значение типа данных
  */
 Variant::Variant(std::string& a_var) : m_var_type(var_type::STRING), m_pointer_to_value(new std::string(a_var)) {
-
+	
 }
 
 /**
@@ -76,7 +74,7 @@ Variant::Variant(std::wstring& a_var) : m_var_type(var_type::WSTRING), m_pointer
  *
  * @param [in] a_var Значение типа данных
  */
-Variant::Variant(Time* a_var) : m_var_type(var_type::TIME), m_pointer_to_value(a_var) {
+Variant::Variant(Time a_var) : m_var_type(var_type::TIME), m_pointer_to_value(new Time(a_var)) {
 
 }
 
@@ -85,7 +83,7 @@ Variant::Variant(Time* a_var) : m_var_type(var_type::TIME), m_pointer_to_value(a
  *
  * @param [in] a_var Значение типа данных
  */
-Variant::Variant(Date* a_var) : m_var_type(var_type::DATE), m_pointer_to_value(a_var) {
+Variant::Variant(Date a_var) : m_var_type(var_type::DATE), m_pointer_to_value(new Date(a_var)) {
 
 }
 
@@ -94,7 +92,7 @@ Variant::Variant(Date* a_var) : m_var_type(var_type::DATE), m_pointer_to_value(a
  *
  * @param [in] a_var Значение типа данных
  */
-Variant::Variant(DateTime* a_var) : m_var_type(var_type::DATETIME), m_pointer_to_value(a_var) {
+Variant::Variant(DateTime a_var) : m_var_type(var_type::DATETIME), m_pointer_to_value(new DateTime(a_var)) {
 
 }
 
@@ -118,6 +116,46 @@ int64_t Variant::getvalue<int64_t>() const {
 	return *static_cast<int64_t*>(m_pointer_to_value);
 }
 
+template<>
+bool Variant::getvalue<bool>() const {
+	return *static_cast<bool*>(m_pointer_to_value);
+}
+
+template<>
+long double Variant::getvalue<long double>() const {
+	return *static_cast<long double*>(m_pointer_to_value);
+}
+
+template<>
+char Variant::getvalue<char>() const {
+	return *static_cast<char*>(m_pointer_to_value);
+}
+
+template<>
+const std::string& Variant::getvalue<const std::string&>() const {
+	return *static_cast<std::string*>(m_pointer_to_value);
+}
+
+template<>
+const std::wstring& Variant::getvalue<const std::wstring&>() const {
+	return *static_cast<std::wstring*>(m_pointer_to_value);
+}
+
+template<>
+const Date& Variant::getvalue<const Date&>() const {
+	return *static_cast<Date*>(m_pointer_to_value);
+}
+
+template<>
+const Time& Variant::getvalue<const Time&>() const {
+	return *static_cast<Time*>(m_pointer_to_value);
+}
+
+template<>
+const DateTime& Variant::getvalue<const DateTime&>() const {
+	return *static_cast<DateTime*>(m_pointer_to_value);
+}
+
 /**
  * @brief Возвращение типа данных.
  * 
@@ -133,6 +171,47 @@ var_type Variant::getvaluetype() const {
  */
 bool operator== (const Variant& a_variant_1, const Variant& a_variant_2)
 {
+	if (a_variant_1.getvaluetype() == a_variant_2.getvaluetype()) {
+		if(a_variant_1.getvaluetype() == var_type::INT64)
+			return a_variant_1.getvalue<int64_t>() == a_variant_2.getvalue<int64_t>();
+		if (a_variant_1.getvaluetype() == var_type::UINT64)
+			return a_variant_1.getvalue<uint64_t>() == a_variant_2.getvalue<uint64_t>();
+		if (a_variant_1.getvaluetype() == var_type::BOOL)
+			return a_variant_1.getvalue<bool>() == a_variant_2.getvalue<bool>();
+		if (a_variant_1.getvaluetype() == var_type::LDOUBLE)
+			return a_variant_1.getvalue<long double>() == a_variant_2.getvalue<long double>();
+		if (a_variant_1.getvaluetype() == var_type::CHAR)
+			return a_variant_1.getvalue<char>() == a_variant_2.getvalue<char>();
+		if (a_variant_1.getvaluetype() == var_type::STRING)
+			return a_variant_1.getvalue<std::string>() == a_variant_2.getvalue<std::string>();
+		if (a_variant_1.getvaluetype() == var_type::WSTRING)
+			return a_variant_1.getvalue<std::wstring>() == a_variant_2.getvalue<std::wstring>();
+		if (a_variant_1.getvaluetype() == var_type::DATE)
+			return a_variant_1.getvalue<Date>() == a_variant_2.getvalue<Date>();
+		if (a_variant_1.getvaluetype() == var_type::TIME)
+			return a_variant_1.getvalue<Time>() == a_variant_2.getvalue<Time>();
+		if (a_variant_1.getvaluetype() == var_type::DATETIME)
+			return a_variant_1.getvalue<DateTime>() == a_variant_2.getvalue<DateTime>();
 
-		return false;
+	}
+}
+
+/**
+ * @brief Перегрузка оператора сравнения == для класса Variant.
+ *
+ */
+Variant& Variant::operator= (const Variant& a_variant)
+{
+	if (this == &a_variant)
+		return *this;
+	m_var_type = a_variant.m_var_type;
+	m_pointer_to_value = a_variant.m_pointer_to_value;
+	return *this;
+}
+
+/**
+ * @brief Деструктор.
+ */
+Variant::~Variant() {
+	delete m_pointer_to_value;
 }

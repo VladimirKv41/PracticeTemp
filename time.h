@@ -21,6 +21,9 @@ public:
 	// Возращение секунд из временной отметки
 	uint8_t getseconds() const;
 
+	// Перегрузка оператора сравнения == для класса Time.
+	friend bool operator== (const Time& a_time_1, const Time& a_time_2);
+
 private:
 	// Количество часов, минут, секунд
 	uint8_t m_hours;

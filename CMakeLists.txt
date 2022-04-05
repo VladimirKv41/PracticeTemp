@@ -19,7 +19,7 @@ add_executable(CMakeCubeTest "main.cpp" "test.cpp" "cube.cpp" "cube.h"
 	"factclassifier.cpp" "factclassifier.h" "dimension.cpp" "dimension.h"
 	"dimensionmark.cpp" "dimensionmark.h" "metric.cpp" "metric.h"
 	"date.cpp" "date.h" "time.cpp" "time.h"
-	"variant.cpp" "variant.h")
+	"variant.cpp" "variant.h" "datetime.h")
 
 add_test(NAME CMakeCubeTest COMMAND CMakeCubeTest)
 

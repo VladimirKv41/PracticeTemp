@@ -49,3 +49,14 @@ uint8_t Date::getmonth() const {
 uint8_t Date::getday() const {
 	return m_day;
 }
+
+/**
+ * @brief Перегрузка оператора сравнения == для класса Date.
+ *
+ */
+bool operator== (const Date& a_date_1, const Date& a_date_2)
+{
+	return a_date_1.m_year == a_date_2.m_year
+		&& a_date_1.m_month == a_date_2.m_month
+		&& a_date_1.m_day == a_date_2.m_day;
+}
