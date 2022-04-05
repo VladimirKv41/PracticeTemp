@@ -1,0 +1,31 @@
+﻿#ifndef DATE_H
+#define DATE_H
+#include <cstdint>
+
+/**
+ * @brief  Класс Дата.
+ *
+ *  Класс хранящий дату (дни-месяцы-годы).
+ */
+class Date {
+public:
+
+	Date(uint8_t a_day, uint8_t a_month, uint8_t a_year);
+
+	// Возращение года из даты.
+	uint16_t getyear() const;
+
+	// Возращение месяца из даты.
+	uint8_t getmonth() const;
+
+	// Возращение дня из даты.
+	uint8_t getday() const;
+
+private:
+	// Год, месяц, день
+	uint16_t m_year;
+	uint8_t m_month;
+	uint8_t m_day;
+};
+
+#endif

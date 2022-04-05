@@ -1,14 +1,26 @@
-﻿
-cmake_minimum_required (VERSION 2.8)
+﻿cmake_minimum_required (VERSION 3.0.0)
 
-project ("CMakeCube")
+set(CMAKE_C_COMPILER_WORKS 1)
+
+set(CMAKE_CXX_COMPILER_WORKS 1)
+
+set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+
+set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 
 set(CMAKE_CXX_STANDARD 11)
 
-#add_subdirectory(Tests)
+project ("CMakeCubeTest")
 
-#add_subdirectory(gtest)
+add_subdirectory(gtest)
 
-add_executable (CMakeCube "Source.cpp" "Source" "Cube.cpp" "Cube.h" "Selection.cpp" "Selection.h" "Fact.cpp" "Fact.h" "FactClassifier.cpp" "FactClassifier.h" "Dimension.cpp" "Dimension.h" "DimensionMark.cpp" "DimensionMark.h" "Metric.cpp" "Metric.h")
+add_executable(CMakeCubeTest "main.cpp" "test.cpp" "cube.cpp" "cube.h"  
+	"selection.cpp" "selection.h" "fact.cpp" "fact.h"
+	"factclassifier.cpp" "factclassifier.h" "dimension.cpp" "dimension.h"
+	"dimensionmark.cpp" "dimensionmark.h" "metric.cpp" "metric.h"
+	"date.cpp" "date.h" "time.cpp" "time.h"
+	"variant.cpp" "variant.h")
 
-add_library(Cube_libs STATIC "Cube.cpp" "Selection.cpp" "Fact.cpp" "FactClassifier.cpp" "Dimension.cpp" "DimensionMark.cpp" "Metric.cpp")
+add_test(NAME CMakeCubeTest COMMAND CMakeCubeTest)
+
+target_link_libraries(CMakeCubeTest gtest gtest_main)
