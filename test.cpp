@@ -1,4 +1,6 @@
 ﻿#include "gtest/gtest.h"
+#include <cmath> 
+#include <chrono> 
 #include "cube.h"
 #include "selection.h"
 #include "variant.h"
@@ -389,18 +391,6 @@ TEST(TestVariant, Character) {
 	EXPECT_EQ(var.getvaluetype(), var_type::CHAR) << "Wrong value type";
 }
 
-TEST(TestVariant, String) {
-	Variant var((std::string)"String Строка");
-	EXPECT_EQ(var.getvalue<std::string>(), "String Строка") << "Wrong value";
-	EXPECT_EQ(var.getvaluetype(), var_type::STRING) << "Wrong value type";
-}
-
-TEST(TestVariant, WideString) {
-	Variant var((std::wstring)L"String Строка");
-	EXPECT_EQ(var.getvalue<std::wstring>(), L"String Строка") << "Wrong value";
-	EXPECT_EQ(var.getvaluetype(), var_type::WSTRING) << "Wrong value type";
-}
-
 TEST(TestVariant, TIME) {
 	Variant var(Time(23,46,00));
 	EXPECT_EQ(var.getvalue<Time>(), Time(23, 46, 00)) << "Wrong value";
@@ -418,6 +408,18 @@ TEST(TestVariant, DATETIME) {
 	DateTime v = {Date(23, 2, 2000),Time(23, 46, 00)};
 	EXPECT_TRUE(var.getvalue<DateTime>() == v) << "Wrong value";
 	EXPECT_EQ(var.getvaluetype(), var_type::DATETIME) << "Wrong value type";
+}
+
+TEST(TestVariant, String) {
+	Variant var((std::string)"String Строка");
+	EXPECT_EQ(var.getvalue<std::string>(), "String Строка") << "Wrong value";
+	EXPECT_EQ(var.getvaluetype(), var_type::STRING) << "Wrong value type";
+}
+
+TEST(TestVariant, WideString) {
+	Variant var((std::wstring)L"String Строка");
+	EXPECT_EQ(var.getvalue<std::wstring>(), L"String Строка") << "Wrong value";
+	EXPECT_EQ(var.getvaluetype(), var_type::WSTRING) << "Wrong value type";
 }
 
 TEST(StressTest, MakeTimeFor_3650000_Elements) {

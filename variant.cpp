@@ -56,7 +56,7 @@ Variant::Variant(char a_var) : m_var_type(var_type::CHAR), m_pointer_to_value(ne
  *
  * @param [in] a_var Значение типа данных
  */
-Variant::Variant(std::string& a_var) : m_var_type(var_type::STRING), m_pointer_to_value(new std::string(a_var)) {
+Variant::Variant(const std::string& a_var) : m_var_type(var_type::STRING), m_pointer_to_value(new std::string(a_var)) {
 	
 }
 
@@ -65,7 +65,7 @@ Variant::Variant(std::string& a_var) : m_var_type(var_type::STRING), m_pointer_t
  *
  * @param [in] a_var Значение типа данных
  */
-Variant::Variant(std::wstring& a_var) : m_var_type(var_type::WSTRING), m_pointer_to_value(new std::wstring(a_var)) {
+Variant::Variant(const std::wstring& a_var) : m_var_type(var_type::WSTRING), m_pointer_to_value(new std::wstring(a_var)) {
 
 }
 

@@ -40,9 +40,9 @@ public:
 
 	Variant(char a_var);
 
-	Variant(std::string& a_var);
+	Variant(const std::string& a_var);
 
-	Variant(std::wstring& a_var);
+	Variant(const std::wstring& a_var);
 
 	Variant(Time a_var);
 
