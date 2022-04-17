@@ -16,8 +16,10 @@ project ("CMakeCubeTest")
 if(NOT EXISTS ${GTESTDIR})
   message(SEND_ERROR "Specify GoogleTest directory")
 endif()
-add_subdirectory(${GTESTDIR} "gtest")
 
+if(NOT EXISTS ${BUILDDIR})
+  message(SEND_ERROR "Specify build directory")
+endif()
 
 add_executable(CMakeCubeTest "test/main.cpp" "test/test.cpp" "src/cube.cpp" "src/cube.h"  
   "src/selection.cpp" "src/selection.h" "src/fact.cpp" "src/fact.h"
@@ -27,7 +29,16 @@ add_executable(CMakeCubeTest "test/main.cpp" "test/test.cpp" "src/cube.cpp" "src
   "src/variant.cpp" "src/variant.h" "src/datetime.h")
 
 target_include_directories(CMakeCubeTest PRIVATE "src")
+target_include_directories(CMakeCubeTest PRIVATE "${GTESTDIR}/googletest/include")
 
-target_link_libraries(CMakeCubeTest gtest gtest_main)
+if(MINGW OR UNIX)
+target_link_libraries(CMakeCubeTest 
+"${BUILDDIR}/lib/libgtest.a" 
+"${BUILDDIR}/lib/libgtest_main.a" -pthread )
+elseif(MSVC)
+target_link_libraries(CMakeCubeTest 
+"${BUILDDIR}/lib/gtestd.lib" 
+"${BUILDDIR}/lib/gtest_maind.lib" -pthread )
+endif()
 
 add_test(NAME CMakeCubeTest COMMAND CMakeCubeTest)
