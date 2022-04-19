@@ -14,6 +14,6 @@ Metric::Metric(const std::string& a_name) : m_name(a_name) {
  *
  * @return Название метрики
  */
-const std::string& Metric::get_name() const {
+const std::string& Metric::getName() const {
 	return m_name;
 }

@@ -8,31 +8,31 @@ class Metric;
 class FactClassifier;
 
 /**
- * @brief Отметка (на измерении).
+ * @brief Отметка на Измерении.
  *
- * Класс хранящий точки данных отметок на измерении и их метрику.
+ * Класс хранящий Классификаторы Фактов Отметок на Измерении.
  */
 class DimensionMark {
 public:
 
 	DimensionMark(const std::string& a_name);
 
-	// Добавление связанной точки данных
-	void push_FactClassifier(const std::string& a_meas, FactClassifier* a_point);
+	// Добавление связанного Классификатора Факта
+	void pushFactClassifier(const std::string& a_meas, FactClassifier* a_point);
 
-	// Получение названия отметки на измерении
-	const std::string& get_name() const;
+	// Получение названия Отметки на Измерении
+	const std::string& getName() const;
 
-	// Получение массива связанных точек данных
-	const std::unordered_multimap<std::string, FactClassifier*>& get_FactClassifiers() const;
+	// Получение массива связанных Классификаторов Фактов
+	const std::unordered_multimap<std::string, FactClassifier*>& getFactClassifiers() const;
 
 private:
 
-	// Название отметки
+	// Название Отметки
 	std::string m_name;
-	// Массив связанных точек данных
-	// Ключ: название метрики
-	std::unordered_multimap<std::string, FactClassifier*> m_points;
+	// Массив связанных Классификаторов Фактов
+	// Ключ: название Метрики
+	std::unordered_multimap<std::string, FactClassifier*> m_classifiers;
 };
 
 #endif

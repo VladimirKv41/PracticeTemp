@@ -1,17 +1,19 @@
 cmake_minimum_required (VERSION 3.1.0)
 
+project ("CMakeCubeTest")
+
 set(CMAKE_C_COMPILER_WORKS 1)
 
 set(CMAKE_CXX_COMPILER_WORKS 1)
 
 set(CMAKE_CXX_STANDARD 11)
 
-if(WIN32)
-	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
-	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
-endif()
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-project ("CMakeCubeTest")
+if(WIN32)
+	string(REPLACE "/MDd" "/MTd" CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
+	string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
+endif()
 
 if(NOT EXISTS ${GTESTDIR})
   message(SEND_ERROR "Specify GoogleTest directory")
@@ -29,16 +31,16 @@ add_executable(CMakeCubeTest "test/main.cpp" "test/test.cpp" "src/cube.cpp" "src
   "src/variant.cpp" "src/variant.h" "src/datetime.h")
 
 target_include_directories(CMakeCubeTest PRIVATE "src")
-target_include_directories(CMakeCubeTest PRIVATE "${GTESTDIR}/googletest/include")
+target_include_directories(CMakeCubeTest PRIVATE "${GTESTDIR}")
 
 if(MINGW OR UNIX)
-target_link_libraries(CMakeCubeTest 
-"${BUILDDIR}/lib/libgtest.a" 
-"${BUILDDIR}/lib/libgtest_main.a" -pthread )
+target_link_libraries(CMakeCubeTest
+"${BUILDDIR}/libgtest.a" 
+"${BUILDDIR}/libgtest_main.a" -pthread )
 elseif(MSVC)
-target_link_libraries(CMakeCubeTest 
-"${BUILDDIR}/lib/gtestd.lib" 
-"${BUILDDIR}/lib/gtest_maind.lib" -pthread )
+target_link_libraries(CMakeCubeTest
+"${BUILDDIR}/gtestd.lib" 
+"${BUILDDIR}/gtest_maind.lib" -pthread )
 endif()
 
 add_test(NAME CMakeCubeTest COMMAND CMakeCubeTest)

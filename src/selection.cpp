@@ -48,7 +48,7 @@ make_result Selection::make(const std::string& a_dim_name, const std::vector<std
 	}
 	// Заполнение выборки
 	if (m_selection_points.empty()) {
-		making((*it_dim)->get_marks(), a_dim_name, a_marks_list, a_metric_list);
+		making((*it_dim)->getMarks(), a_dim_name, a_marks_list, a_metric_list);
 	}
 	else {
 		making(m_selection_points, a_dim_name, a_marks_list, a_metric_list);
@@ -75,7 +75,7 @@ void Selection::clean(bool cube_cleaning) {
 	}
 	if (!m_selection_points.empty()) {
 		m_selection_points.clear();
-		m_cube->clean_vector(m_aggregation_metrics);
+		m_cube->cleanVector(m_aggregation_metrics);
 	}
 }
 
@@ -121,7 +121,7 @@ void Selection::making
 		if (a_map_from.find(*it_dim_mark) == a_map_from.end()) \
 			continue;
 		// Добавление точек данных
-		get_FactClassifiers_by_metric(m_selection_points[{a_dim_name, * it_dim_mark}], a_map_from.at(*it_dim_mark)->get_FactClassifiers(), a_metric_list);
+		get_FactClassifiers_by_metric(m_selection_points[{a_dim_name, * it_dim_mark}], a_map_from.at(*it_dim_mark)->getFactClassifiers(), a_metric_list);
 		// Была ли найдена хоть одна точка данных
 		if (m_selection_points[{a_dim_name, * it_dim_mark}].empty()) {
 			m_selection_points.erase({ a_dim_name, *it_dim_mark });
@@ -226,12 +226,12 @@ void Selection::add_rest_fact_points(dpoint_ummaps_map& a_map, const std::string
 	auto& a_map_value = a_map[{a_dim_name, a_dim_mark}];
 	for (auto it_dpoint = a_map_value.begin(); it_dpoint != a_map_value.end(); it_dpoint++) {
 		// Итерация по точкам данных факта
-		auto fact_datapoints = (*it_dpoint).second->get_Fact()->get_FactClassifiers();
+		auto fact_datapoints = (*it_dpoint).second->getFact()->getFactClassifiers();
 		for (auto it_dpoint2 = fact_datapoints.begin(); it_dpoint2 != fact_datapoints.end(); it_dpoint2++) {
-			auto& dim_name = (*it_dpoint2)->get_Dimension()->get_name();
+			auto& dim_name = (*it_dpoint2)->getDimension()->getName();
 			// Добавление всех точек данных
 			if (dim_name != a_dim_name) {
-				a_map[{dim_name, (*it_dpoint2)->get_dim_mark_name()}].emplace((*it_dpoint).second->get_Fact()->get_Metric_name(), *it_dpoint2);
+				a_map[{dim_name, (*it_dpoint2)->getDimMarkName()}].emplace((*it_dpoint).second->getFact()->getMetricName(), *it_dpoint2);
 			}
 		}
 	}
@@ -245,7 +245,7 @@ void Selection::add_rest_fact_points(dpoint_ummaps_map& a_map, const std::string
  */
 std::vector<Dimension*>::const_iterator Selection::find_dimension(const std::string& a_dimension_name) const {
 	for (auto it_dim = m_cube->m_dims.begin(); it_dim != m_cube->m_dims.end(); it_dim++) {
-		if ((*it_dim)->get_name() == a_dimension_name) {
+		if ((*it_dim)->getName() == a_dimension_name) {
 			return it_dim;
 		}
 	}

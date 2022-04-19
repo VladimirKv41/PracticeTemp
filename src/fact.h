@@ -10,35 +10,35 @@ class FactClassifier;
 /**
  * @brief Факт.
  *
- * Класс хранящий значение и его метрику.
+ * Класс хранящий значение и его Метрику.
  */
 class Fact {
 public:
 
 	Fact(double a_value, Metric* a_mes);
 
-	// Добавление связанной точки данных
-	void push_FactClassifier(FactClassifier* a_point);
+	// Добавление связанного Классификатора Факта
+	void pushFactClassifier(FactClassifier* a_point);
 
-	// Получение вектора связанных точек данных
-	const std::vector<FactClassifier*>& get_FactClassifiers() const;
+	// Получение вектора связанных Классификаторов Факта
+	const std::vector<FactClassifier*>& getFactClassifiers() const;
 
-	// Получение значения факта
-	double get_value() const;
+	// Получение значения Факта
+	double getValue() const;
 
-	// Получение названия метрики факта
-	const std::string& get_Metric_name() const;
+	// Получение названия Метрики Факта
+	const std::string& getMetricName() const;
 
-	// Получение связанной метрики
-	const Metric* const get_Metric() const;
+	// Получение связанной Метрики
+	const Metric* const getMetric() const;
 
 private:
-	// Значение факта
+	// Значение Факта
 	double m_value;
-	// Связанная метрика
+	// Связанная Метрика
 	Metric* m_mes;
-	// Вектор связанных точек данных
-	std::vector<FactClassifier*> m_points;
+	// Вектор связанных Классификаторов Факта
+	std::vector<FactClassifier*> m_classifiers;
 };
 
 #endif

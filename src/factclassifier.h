@@ -7,27 +7,27 @@ class DimensionMark;
 class Fact;
 
 /**
- * @brief Точка данных.
+ * @brief Классификатор Факта.
  *
  * Класс, определяющий для Факта Отметки на Измерениях.
  * Организует взаимодействие Факта и Измерений,
- * служит для организации выборок.
+ * служит для организации Выборок.
  */
 class FactClassifier {
 public:
 	FactClassifier(Fact* a_fact, Dimension* a_dim, DimensionMark* a_dim_mark);
 
-	// Получение связанного измерения
-	const Dimension* const get_Dimension() const;
+	// Получение связанного Измерения
+	const Dimension* const getDimension() const;
 
-	// Получение связанного факта
-	Fact* const get_Fact() const;
+	// Получение связанного Факта
+	Fact* const getFact() const;
 
-	// Получение отметки в связанном измерении
-	const std::string& get_dim_mark_name() const;
+	// Получение названия Отметки на Измерении
+	const std::string& getDimMarkName() const;
 
 private:
-	// Связанные факт/измерение/отметка в измерении
+	// Связанные Факт/Измерение/Отметка в Измерении
 	Fact* m_fact;
 	Dimension* m_dim;
 	DimensionMark* m_dim_mark;

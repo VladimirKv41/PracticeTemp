@@ -13,46 +13,46 @@ Fact::Fact(double a_value, Metric* a_mes) : m_value(a_value), m_mes(a_mes) {
 }
 
 /**
- * @brief Добавление связанной точки данных.
+ * @brief Добавление связанного Классификатора Факта.
  *
- * @param [in,out] a_point Точка данных
+ * @param [in,out] a_point Классификатор Факта
  */
-void Fact::push_FactClassifier(FactClassifier* a_point) {
-	m_points.push_back(a_point);
+void Fact::pushFactClassifier(FactClassifier* a_point) {
+	m_classifiers.push_back(a_point);
 }
 
 /**
- * @brief Получение вектора связанных точек данных.
+ * @brief Получение вектора связанных Классификаторов Факта.
  *
- * @return Вектор связанных точек данных
+ * @return Вектор связанных Классификаторов Факта
  */
-const std::vector<FactClassifier*>& Fact::get_FactClassifiers() const {
-	return m_points;
+const std::vector<FactClassifier*>& Fact::getFactClassifiers() const {
+	return m_classifiers;
 }
 
 /**
- * @brief Получение значения факта.
+ * @brief Получение значения Факта.
  *
- * @return Значения факта
+ * @return Значения Факта
  */
-double Fact::get_value() const {
+double Fact::getValue() const {
 	return m_value;
 }
 
 /**
- * @brief Получение названия метрики факта.
+ * @brief Получение названия Метрики Факта.
  *
- * @return Название метрики
+ * @return Название Метрики
  */
-const std::string& Fact::get_Metric_name() const {
-	return m_mes->get_name();
+const std::string& Fact::getMetricName() const {
+	return m_mes->getName();
 }
 
 /**
- * @brief Получение связанной метрики.
+ * @brief Получение связанной Метрики.
  *
- * @return Связанная метрика
+ * @return Связанная Метрика
  */
-const Metric* const Fact::get_Metric() const {
+const Metric* const Fact::getMetric() const {
 	return m_mes;
 }

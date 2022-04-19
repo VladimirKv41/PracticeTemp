@@ -1,7 +1,7 @@
-#ifndef DATETIME_H
+п»ї#ifndef DATETIME_H
 #define DATETIME_H
 
-// структура, объединяющая дату и время
+// СЃС‚СЂСѓРєС‚СѓСЂР°, РѕР±СЉРµРґРёРЅВ¤СЋС‰Р°В¤ РґР°С‚Сѓ Рё РІСЂРµРјВ¤
 struct DateTime {
 	Date date;
 	Time time;

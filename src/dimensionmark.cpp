@@ -3,36 +3,36 @@
 /**
  * @brief Конструктор.
  *
- * @param [in,out] a_name Название отметки на измерении
+ * @param [in,out] a_name Название Отметки на Измерении
  */
 DimensionMark::DimensionMark(const std::string& a_name) : m_name(a_name) {
 
 }
 
 /**
- * @brief Добавление связанной точки данных.
+ * @brief Добавление связанного Классификатора Факта.
  *
- * @param [in,out] a_meas Название метрики
- * @param [in,out] a_point Точка данных
+ * @param [in,out] a_meas Название Метрики
+ * @param [in,out] a_point Классификатор Факта
  */
-void DimensionMark::push_FactClassifier(const std::string& a_meas, FactClassifier* a_point) {
-	m_points.insert({ a_meas,a_point });
+void DimensionMark::pushFactClassifier(const std::string& a_meas, FactClassifier* a_point) {
+	m_classifiers.insert({ a_meas,a_point });
 }
 
 /**
- * @brief Получение названия отметки на измерении.
+ * @brief Получение названия Отметки на Измерении.
  *
- * @return Название отметки на измерении
+ * @return Название Отметки на Измерении
  */
-const std::string& DimensionMark::get_name() const {
+const std::string& DimensionMark::getName() const {
 	return m_name;
 }
 
 /**
- * @brief Получение массива связанных точек данных.
+ * @brief Получение массива связанных Классификаторов Фактов.
  *
- * @return Массив связанных точек данных
+ * @return Массив связанных Классификаторо Фактов
  */
-const std::unordered_multimap<std::string, FactClassifier*>& DimensionMark::get_FactClassifiers() const {
-	return m_points;
+const std::unordered_multimap<std::string, FactClassifier*>& DimensionMark::getFactClassifiers() const {
+	return m_classifiers;
 }

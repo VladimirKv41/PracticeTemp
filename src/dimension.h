@@ -17,34 +17,34 @@ public:
 
 	Dimension(const std::string& a_name);
 
-	// Добавление связанной точки данных
-	void push_FactClassifier(FactClassifier* a_point);
+	// Добавление связанного Классификатора Факта
+	void pushFactClassifier(FactClassifier* a_point);
 
-	// Получение вектора связанных точек данных
-	const std::vector<FactClassifier*>& get_FactClassifiers() const;
+	// Получение вектора связанных Классификатор Фактов
+	const std::vector<FactClassifier*>& getFactClassifiers() const;
 
-	// Получение отметки в измерении
-	DimensionMark* const get_DimensionPosition(const std::string& a_mark);
+	// Получение Отметки на Измерении
+	DimensionMark* const getDimensionMark(const std::string& a_mark);
 
-	// Поиск отметки в измерении
-	bool search_mark(const std::string& a_mark) const;
+	// Поиск Отметки на Измерении
+	bool searchMark(const std::string& a_mark) const;
 
-	// Получение названия измерения
-	const std::string& get_name() const;
+	// Получение названия Измерения
+	const std::string& getName() const;
 
-	// Получение массива отметок на измерении
-	const std::map<std::string, DimensionMark*>& get_marks() const;
+	// Получение массива Отметок на Измерении
+	const std::map<std::string, DimensionMark*>& getMarks() const;
 
 	~Dimension();
 
 private:
-	// Массив отметок на измерении
-	// Ключ: название отметок
+	// Массив Отметок на Измерении
+	// Ключ: название Отметок
 	std::map<std::string, DimensionMark*> m_marks_map;
-	// Название измерения
+	// Название Измерения
 	std::string m_name;
-	// Вектор связанных точек данных
-	std::vector<FactClassifier*> m_points;
+	// Вектор связанных Классификаторов Фактов
+	std::vector<FactClassifier*> m_classifiers;
 };
 
 #endif

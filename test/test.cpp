@@ -45,84 +45,84 @@ TEST(TestCube, Destructor) {
 
 TEST(TestCube, AddingDimensionRussian) {
 	Cube* cube = new Cube();
-	EXPECT_TRUE(cube->add_Dimension("Время")) << "New dimension but not added";
-	EXPECT_TRUE(cube->add_Dimension("Время123@@@_033--")) << "New dimension but not added";
-	EXPECT_TRUE(cube->add_Dimension("123@@@_033--")) << "New dimension but not added";
+	EXPECT_TRUE(cube->addDimension("Время")) << "New dimension but not added";
+	EXPECT_TRUE(cube->addDimension("Время123@@@_033--")) << "New dimension but not added";
+	EXPECT_TRUE(cube->addDimension("123@@@_033--")) << "New dimension but not added";
 	delete cube;
 }
 
 TEST(TestCube, AddingDimensionEnglish) {
 	Cube* cube = new Cube();
-	EXPECT_TRUE(cube->add_Dimension("Time")) << "New dimension but not added";
-	EXPECT_TRUE(cube->add_Dimension("Time 123@@@_033--")) << "New dimension but not added";
-	EXPECT_TRUE(cube->add_Dimension(" 123@@@_033--")) << "New dimension but not added";
+	EXPECT_TRUE(cube->addDimension("Time")) << "New dimension but not added";
+	EXPECT_TRUE(cube->addDimension("Time 123@@@_033--")) << "New dimension but not added";
+	EXPECT_TRUE(cube->addDimension(" 123@@@_033--")) << "New dimension but not added";
 	delete cube;
 }
 
 TEST(TestCube, AddingDimensionEmpty) {
 	Cube* cube = new Cube();
-	EXPECT_TRUE(cube->add_Dimension("")) << "New dimension but not added";
-	EXPECT_FALSE(cube->add_Dimension("")) << "Added twice";
+	EXPECT_TRUE(cube->addDimension("")) << "New dimension but not added";
+	EXPECT_FALSE(cube->addDimension("")) << "Added twice";
 	delete cube;
 }
 
 TEST(TestCube, AddingMetricRussian) {
 	Cube* cube = new Cube();
-	EXPECT_TRUE(cube->add_Metric("Температура")) << "New metric but not added";
-	EXPECT_TRUE(cube->add_Metric("Температура 123@@@_033--")) << "New metric but not added";
-	EXPECT_TRUE(cube->add_Metric(" 123@@@_033--")) << "New metric but not added";
+	EXPECT_TRUE(cube->addMetric("Температура")) << "New metric but not added";
+	EXPECT_TRUE(cube->addMetric("Температура 123@@@_033--")) << "New metric but not added";
+	EXPECT_TRUE(cube->addMetric(" 123@@@_033--")) << "New metric but not added";
 	delete cube;
 }
 
 TEST(TestCube, AddingMetricEnglish) {
 	Cube* cube = new Cube();
-	EXPECT_TRUE(cube->add_Metric("Temperature")) << "New metric but not added";
-	EXPECT_TRUE(cube->add_Metric("Temperature 123@@@_033--")) << "New metric but not added";
-	EXPECT_TRUE(cube->add_Metric(" 123@@@_033--")) << "New metric but not added";
+	EXPECT_TRUE(cube->addMetric("Temperature")) << "New metric but not added";
+	EXPECT_TRUE(cube->addMetric("Temperature 123@@@_033--")) << "New metric but not added";
+	EXPECT_TRUE(cube->addMetric(" 123@@@_033--")) << "New metric but not added";
 	delete cube;
 }
 
 TEST(TestCube, AddingMetricEmpty) {
 	Cube* cube = new Cube();
-	EXPECT_TRUE(cube->add_Metric("")) << "New metric but not added";
-	EXPECT_FALSE(cube->add_Metric("")) << "Added twice";
+	EXPECT_TRUE(cube->addMetric("")) << "New metric but not added";
+	EXPECT_FALSE(cube->addMetric("")) << "Added twice";
 	delete cube;
 }
 
 TEST(TestCube, AddingFactUnique) {
 	setlocale(LC_ALL, "Russian");
 	Cube* cube = new Cube();
-	cube->add_Dimension("Дата");
-	cube->add_Dimension("Город");
-	cube->add_Metric("Температура");
-	ASSERT_EQ(cube->add_Fact(-21, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(1)) << "fact not added";
-	EXPECT_EQ(cube->add_Fact(14, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(0)) << "fact must be not added with true metric";
-	EXPECT_EQ(cube->add_Fact(0, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(0)) << "fact must be not added with true metric";
-	EXPECT_EQ(cube->add_Fact(-21.0, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(0)) << "fact must be not added with true metric";
-	EXPECT_EQ(cube->add_Fact(14.0, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(0)) << "fact must be not added with true metric";
-	EXPECT_EQ(cube->add_Fact(0.0, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(0)) << "fact must be not added with true metric";
+	cube->addDimension("Дата");
+	cube->addDimension("Город");
+	cube->addMetric("Температура");
+	ASSERT_EQ(cube->addFact(-21, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(1)) << "fact not added";
+	EXPECT_EQ(cube->addFact(14, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(0)) << "fact must be not added with true metric";
+	EXPECT_EQ(cube->addFact(0, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(0)) << "fact must be not added with true metric";
+	EXPECT_EQ(cube->addFact(-21.0, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(0)) << "fact must be not added with true metric";
+	EXPECT_EQ(cube->addFact(14.0, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(0)) << "fact must be not added with true metric";
+	EXPECT_EQ(cube->addFact(0.0, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(0)) << "fact must be not added with true metric";
 	delete cube;
 }
 
 TEST(TestCube, AddingFactWrongMetric) {
 	Cube* cube = new Cube();
-	cube->add_Dimension("Дата");
-	cube->add_Dimension("Город");
-	cube->add_Metric("Температура");
-	EXPECT_EQ(cube->add_Fact(21, "Cкорость ветра", { "25 января","Зеленоград" }), static_cast<add_result>(-1)) << "fact must be not added with wrong metric";
-	EXPECT_EQ(cube->add_Fact(21, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(1)) << "fact not added";
-	EXPECT_EQ(cube->add_Fact(21, "Cкорость ветра", { "25 января","Зеленоград" }), static_cast<add_result>(-1)) << "fact must be not added with wrong metric";
+	cube->addDimension("Дата");
+	cube->addDimension("Город");
+	cube->addMetric("Температура");
+	EXPECT_EQ(cube->addFact(21, "Cкорость ветра", { "25 января","Зеленоград" }), static_cast<add_result>(-1)) << "fact must be not added with wrong metric";
+	EXPECT_EQ(cube->addFact(21, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(1)) << "fact not added";
+	EXPECT_EQ(cube->addFact(21, "Cкорость ветра", { "25 января","Зеленоград" }), static_cast<add_result>(-1)) << "fact must be not added with wrong metric";
 	delete cube;
 }
 
 TEST(TestCube, AddingFactTwoMetric) {
 	Cube* cube = new Cube();
-	cube->add_Dimension("Дата");
-	cube->add_Dimension("Город");
-	cube->add_Metric("Температура");
-	cube->add_Metric("Влажность");
-	EXPECT_EQ(cube->add_Fact(21, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(1)) << "fact not added";
-	EXPECT_EQ(cube->add_Fact(21, "Влажность", { "25 января","Зеленоград" }), static_cast<add_result>(1)) << "fact not added";
+	cube->addDimension("Дата");
+	cube->addDimension("Город");
+	cube->addMetric("Температура");
+	cube->addMetric("Влажность");
+	EXPECT_EQ(cube->addFact(21, "Температура", { "25 января","Зеленоград" }), static_cast<add_result>(1)) << "fact not added";
+	EXPECT_EQ(cube->addFact(21, "Влажность", { "25 января","Зеленоград" }), static_cast<add_result>(1)) << "fact not added";
 	delete cube;
 }
 
@@ -153,14 +153,14 @@ TEST(TestSelection, DestructorSelectionCube) {
 
 TEST(TestSelection, Found) {
 	Cube* cube = new Cube();
-	cube->add_Dimension("Город");
-	cube->add_Dimension("Дата");
-	cube->add_Metric("Температура");
-	cube->add_Metric("Влажность");
+	cube->addDimension("Город");
+	cube->addDimension("Дата");
+	cube->addMetric("Температура");
+	cube->addMetric("Влажность");
 	for (int city_c = 0; city_c < 5; city_c++) {
 		for (int date_c = 0; date_c < 20; date_c++) {
-			cube->add_Fact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
-			cube->add_Fact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
 		}
 	}
 	Selection* select = new Selection(cube);
@@ -172,14 +172,14 @@ TEST(TestSelection, Found) {
 
 TEST(TestSelection, NotFound) {
 	Cube* cube = new Cube();
-	cube->add_Dimension("Город");
-	cube->add_Dimension("Дата");
-	cube->add_Metric("Температура");
-	cube->add_Metric("Влажность");
+	cube->addDimension("Город");
+	cube->addDimension("Дата");
+	cube->addMetric("Температура");
+	cube->addMetric("Влажность");
 	for (int city_c = 0; city_c < 5; city_c++) {
 		for (int date_c = 0; date_c < 20; date_c++) {
-			cube->add_Fact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
-			cube->add_Fact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
 		}
 	}
 	Selection* select = new Selection(cube);
@@ -192,14 +192,14 @@ TEST(TestSelection, NotFound) {
 
 TEST(TestSelection, WrongDimension) {
 	Cube* cube = new Cube();
-	cube->add_Dimension("Дата");
-	cube->add_Dimension("Город");
-	cube->add_Metric("Температура");
-	cube->add_Metric("Влажность");
+	cube->addDimension("Дата");
+	cube->addDimension("Город");
+	cube->addMetric("Температура");
+	cube->addMetric("Влажность");
 	for (int city_c = 0; city_c < 5; city_c++) {
 		for (int date_c = 0; date_c < 20; date_c++) {
-			cube->add_Fact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
-			cube->add_Fact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
 		}
 	}
 	Selection* select = new Selection(cube);
@@ -212,14 +212,14 @@ TEST(TestSelection, WrongDimension) {
 
 TEST(TestSelection, CubeDeleted) {
 	Cube* cube = new Cube();
-	cube->add_Dimension("Дата");
-	cube->add_Dimension("Город");
-	cube->add_Metric("Температура");
-	cube->add_Metric("Влажность");
+	cube->addDimension("Дата");
+	cube->addDimension("Город");
+	cube->addMetric("Температура");
+	cube->addMetric("Влажность");
 	for (int city_c = 0; city_c < 5; city_c++) {
 		for (int date_c = 0; date_c < 20; date_c++) {
-			cube->add_Fact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
-			cube->add_Fact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
 		}
 	}
 	Selection* select = new Selection(cube);
@@ -232,14 +232,14 @@ TEST(TestSelection, CubeDeleted) {
 
 TEST(TestSelection, CubeDeletedWithMetric) {
 	Cube* cube = new Cube();
-	cube->add_Dimension("Дата");
-	cube->add_Dimension("Город");
-	cube->add_Metric("Температура");
-	cube->add_Metric("Влажность");
+	cube->addDimension("Дата");
+	cube->addDimension("Город");
+	cube->addMetric("Температура");
+	cube->addMetric("Влажность");
 	for (int city_c = 0; city_c < 5; city_c++) {
 		for (int date_c = 0; date_c < 20; date_c++) {
-			cube->add_Fact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
-			cube->add_Fact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
 		}
 	}
 	Selection* select = new Selection(cube);
@@ -252,14 +252,14 @@ TEST(TestSelection, CubeDeletedWithMetric) {
 
 TEST(TestSelection, FoundWithMetric) {
 	Cube* cube = new Cube();
-	cube->add_Dimension("Город");
-	cube->add_Dimension("Дата");
-	cube->add_Metric("Температура");
-	cube->add_Metric("Влажность");
+	cube->addDimension("Город");
+	cube->addDimension("Дата");
+	cube->addMetric("Температура");
+	cube->addMetric("Влажность");
 	for (int city_c = 0; city_c < 5; city_c++) {
 		for (int date_c = 0; date_c < 20; date_c++) {
-			cube->add_Fact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
-			cube->add_Fact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
 		}
 	}
 	Selection* select = new Selection(cube);
@@ -271,14 +271,14 @@ TEST(TestSelection, FoundWithMetric) {
 
 TEST(TestSelection, NotFoundWithMetric) {
 	Cube* cube = new Cube();
-	cube->add_Dimension("Город");
-	cube->add_Dimension("Дата");
-	cube->add_Metric("Температура");
-	cube->add_Metric("Влажность");
+	cube->addDimension("Город");
+	cube->addDimension("Дата");
+	cube->addMetric("Температура");
+	cube->addMetric("Влажность");
 	for (int city_c = 0; city_c < 5; city_c++) {
 		for (int date_c = 0; date_c < 20; date_c++) {
-			cube->add_Fact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
-			cube->add_Fact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
 		}
 	}
 	Selection* select = new Selection(cube);
@@ -291,14 +291,14 @@ TEST(TestSelection, NotFoundWithMetric) {
 
 TEST(TestSelection, WrongDimensionWithMetric) {
 	Cube* cube = new Cube();
-	cube->add_Dimension("Дата");
-	cube->add_Dimension("Город");
-	cube->add_Metric("Температура");
-	cube->add_Metric("Влажность");
+	cube->addDimension("Дата");
+	cube->addDimension("Город");
+	cube->addMetric("Температура");
+	cube->addMetric("Влажность");
 	for (int city_c = 0; city_c < 5; city_c++) {
 		for (int date_c = 0; date_c < 20; date_c++) {
-			cube->add_Fact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
-			cube->add_Fact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
 		}
 	}
 	Selection* select = new Selection(cube);
@@ -311,27 +311,27 @@ TEST(TestSelection, WrongDimensionWithMetric) {
 
 TEST(TestAll, CleanCubeFull) {
 	Cube* cube = new Cube();
-	cube->add_Dimension("Дата");
-	cube->add_Dimension("Город");
-	cube->add_Metric("Температура");
-	cube->add_Metric("Влажность");
+	cube->addDimension("Дата");
+	cube->addDimension("Город");
+	cube->addMetric("Температура");
+	cube->addMetric("Влажность");
 	for (int city_c = 0; city_c < 5; city_c++) {
 		for (int date_c = 0; date_c < 20; date_c++) {
-			cube->add_Fact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
-			cube->add_Fact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
 		}
 	}
 	Selection* select = new Selection(cube);
 	select->make("Дата", { "15 мая","16 мая" });
 	EXPECT_NO_THROW(cube->clean()) << "cleaning of full cube causes error";
-	EXPECT_TRUE(cube->add_Dimension("Дата")) << "must be added after cleaning";
-	EXPECT_TRUE(cube->add_Dimension("Город")) << "must be added after cleaning";
-	EXPECT_TRUE(cube->add_Metric("Температура")) << "must be added after cleaning";
-	EXPECT_TRUE(cube->add_Metric("Влажность")) << "must be added after cleaning";
+	EXPECT_TRUE(cube->addDimension("Дата")) << "must be added after cleaning";
+	EXPECT_TRUE(cube->addDimension("Город")) << "must be added after cleaning";
+	EXPECT_TRUE(cube->addMetric("Температура")) << "must be added after cleaning";
+	EXPECT_TRUE(cube->addMetric("Влажность")) << "must be added after cleaning";
 	for (int city_c = 0; city_c < 5; city_c++) {
 		for (int date_c = 0; date_c < 20; date_c++) {
-			EXPECT_EQ(cube->add_Fact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] }),static_cast<add_result>(1)) << "must be added after cleaning";;
-			EXPECT_EQ(cube->add_Fact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] }), static_cast<add_result>(1)) << "must be added after cleaning";;
+			EXPECT_EQ(cube->addFact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] }),static_cast<add_result>(1)) << "must be added after cleaning";;
+			EXPECT_EQ(cube->addFact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] }), static_cast<add_result>(1)) << "must be added after cleaning";;
 		}
 	}
 	delete cube;
@@ -340,14 +340,14 @@ TEST(TestAll, CleanCubeFull) {
 
 TEST(TestSelection, Clean) {
 	Cube* cube = new Cube();
-	cube->add_Dimension("Дата");
-	cube->add_Dimension("Город");
-	cube->add_Metric("Температура");
-	cube->add_Metric("Влажность");
+	cube->addDimension("Дата");
+	cube->addDimension("Город");
+	cube->addMetric("Температура");
+	cube->addMetric("Влажность");
 	for (int city_c = 0; city_c < 5; city_c++) {
 		for (int date_c = 0; date_c < 20; date_c++) {
-			cube->add_Fact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
-			cube->add_Fact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_temp[city_c][date_c], "Температура", { cities[city_c],dates[date_c] });
+			cube->addFact(facts_hum[city_c][date_c], "Влажность", { cities[city_c],dates[date_c] });
 		}
 	}
 	Selection* select = new Selection(cube);
@@ -608,16 +608,16 @@ TEST(StressTest, MakeTimeFor_3650000_Elements) {
 	srand(time(NULL));
 	setlocale(LC_ALL, "Russian");
 	Cube* cube = new Cube();
-	cube->add_Dimension(dimensions[2]);
-	cube->add_Dimension(dimensions[1]);
-	cube->add_Dimension(dimensions[0]);
-	cube->add_Metric(metrics[2]);
-	cube->add_Metric(metrics[1]);
-	cube->add_Metric(metrics[0]);
+	cube->addDimension(dimensions[2]);
+	cube->addDimension(dimensions[1]);
+	cube->addDimension(dimensions[0]);
+	cube->addMetric(metrics[2]);
+	cube->addMetric(metrics[1]);
+	cube->addMetric(metrics[0]);
 	for (int year_c = 0; year_c < 10; year_c++) {
 		for (int datetime_c = 0; datetime_c < 365; datetime_c++) {
 			for (int food_c = 0; food_c < 1000; food_c++) {
-				cube->add_Fact(rand() % 1000 + 100, "Цена", { "200" + std::to_string(year_c),"День " + std::to_string(datetime_c),"Еда " + std::to_string(food_c) });
+				cube->addFact(rand() % 1000 + 100, "Цена", { "200" + std::to_string(year_c),"День " + std::to_string(datetime_c),"Еда " + std::to_string(food_c) });
 			}
 		}
 	}
