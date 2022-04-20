@@ -10,8 +10,9 @@ set(CMAKE_CXX_STANDARD 11)
 
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-if(WIN32)
+if(MSVC)
 	string(REPLACE "/MDd" "/MTd" CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
+	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /w44244 /w44715")
 	string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
 endif()
 
@@ -29,6 +30,8 @@ add_executable(CMakeCubeTest "test/main.cpp" "test/test.cpp" "src/cube.cpp" "src
   "src/dimensionmark.cpp" "src/dimensionmark.h" "src/metric.cpp" "src/metric.h"
   "src/date.cpp" "src/date.h" "src/cubetime.cpp" "src/cubetime.h"
   "src/variant.cpp" "src/variant.h" "src/datetime.h")
+
+
 
 target_include_directories(CMakeCubeTest PRIVATE "src")
 target_include_directories(CMakeCubeTest PRIVATE "${GTESTDIR}")
