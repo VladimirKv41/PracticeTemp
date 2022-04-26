@@ -48,18 +48,18 @@ uint8_t Time::seconds() const {
  * @brief Перегрузка оператора сравнения == для класса Time.
  *
  */
-bool operator== (const Time& a_time_1, const Time& a_time_2)
+bool Time::operator== (const Time& a_other) const
 {
-	return a_time_1.m_hours == a_time_2.m_hours
-		&& a_time_1.m_minutes == a_time_2.m_minutes
-		&& a_time_1.m_seconds == a_time_2.m_seconds;
+	return m_hours == a_other.m_hours
+		&& m_minutes == a_other.m_minutes
+		&& m_seconds == a_other.m_seconds;
 }
 
 /**
  * @brief Перегрузка оператора сравнения != для класса Time.
  *
  */
-bool operator!= (const Time& a_time_1, const Time& a_time_2)
+bool Time::operator!= (const Time& a_other) const
 {
-	return !(a_time_1 == a_time_2);
+	return !(*this == a_other);
 }

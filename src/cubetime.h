@@ -22,10 +22,10 @@ public:
 	uint8_t seconds() const;
 
 	// Перегрузка оператора сравнения == для класса Time.
-	friend bool operator== (const Time& a_time_1, const Time& a_time_2);
+	bool operator== (const Time& a_other) const;
 
 	// Перегрузка оператора сравнения == для класса Time.
-	friend bool operator!= (const Time& a_time_1, const Time& a_time_2);
+	bool operator!= (const Time& a_other) const;
 
 private:
 	// Количество часов, минут, секунд

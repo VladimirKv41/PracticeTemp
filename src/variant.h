@@ -61,10 +61,10 @@ public:
 	var_type valueType() const;
 
 	// Перегрузка оператора сравнения == для класса Variant.
-	friend bool operator== (const Variant& a_variant_1, const Variant& a_variant_2);
+	bool operator== (const Variant& a_other) const;
 
 	// Перегрузка оператора сравнения != для класса Variant.
-	friend bool operator!= (const Variant& a_variant_1, const Variant& a_variant_2);
+	bool operator!= (const Variant& a_other) const;
 
 	// Перегрузка оператора присваивания = для класса Variant.
 	Variant& operator= (const Variant& a_variant);

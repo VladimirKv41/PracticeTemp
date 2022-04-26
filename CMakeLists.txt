@@ -17,6 +17,8 @@ if(MSVC)
 	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /wd4244 /wd4715")
 endif()
 
+set(CMAKE_BUILD_TYPE "Release")
+
 if(NOT EXISTS ${GTESTDIR})
   message(SEND_ERROR "Specify GoogleTest directory")
 endif()

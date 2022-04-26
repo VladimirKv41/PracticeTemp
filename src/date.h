@@ -22,10 +22,10 @@ public:
 	uint8_t day() const;
 
 	// Перегрузка оператора сравнения == для класса Date.
-	friend bool operator== (const Date& a_date_1, const Date& a_date_2);
+	bool operator== (const Date& a_other) const;
 
 	// Перегрузка оператора сравнения != для класса Date.
-	friend bool operator!= (const Date& a_date_1, const Date& a_date_2);
+	bool operator!= (const Date& a_other) const;
 
 private:
 	// Год, месяц, день

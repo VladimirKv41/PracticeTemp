@@ -54,18 +54,18 @@ uint8_t Date::day() const {
  * @brief Перегрузка оператора сравнения == для класса Date.
  *
  */
-bool operator== (const Date& a_date_1, const Date& a_date_2)
+bool Date::operator== (const Date& a_other) const
 {
-	return a_date_1.m_year == a_date_2.m_year
-		&& a_date_1.m_month == a_date_2.m_month
-		&& a_date_1.m_day == a_date_2.m_day;
+	return m_year == a_other.m_year
+		&& m_month == a_other.m_month
+		&& m_day == a_other.m_day;
 }
 
 /**
  * @brief Перегрузка оператора сравнения != для класса Date.
  *
  */
-bool operator!= (const Date& a_date_1, const Date& a_date_2)
+bool Date::operator!= (const Date& a_other) const
 {
-	return !(a_date_1 == a_date_2);
+	return !(*this == a_other);
 }

@@ -218,7 +218,7 @@ bool Variant::operator== (const Variant& a_other) const
  */
 bool Variant::operator!= (const Variant& a_other) const
 {
-	return !(*this == a_other);
+	return !(this == a_other);
 }
 
 /**
