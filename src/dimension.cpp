@@ -24,7 +24,7 @@ void Dimension::pushFactClassifier(FactClassifier* a_point) {
  *
  * @return Вектор всех Классификаторов Фактов связанных с этим Измерением
  */
-const std::vector<FactClassifier*>& Dimension::getFactClassifiers() const {
+const std::vector<FactClassifier*>& Dimension::FactClassifiers() const {
 	return m_classifiers;
 }
 
@@ -36,7 +36,7 @@ const std::vector<FactClassifier*>& Dimension::getFactClassifiers() const {
  * @param [in] a_mark Название Отметки
  * @return Отметка
  */
-DimensionMark* const Dimension::getDimensionMark(const std::string& a_mark) {
+DimensionMark* const Dimension::dimensionMark(const std::string& a_mark) {
 	if (m_marks_map.find(a_mark) == m_marks_map.end()) {
 		m_marks_map[a_mark] = new DimensionMark(a_mark);
 		return m_marks_map[a_mark];
@@ -64,7 +64,7 @@ bool Dimension::searchMark(const std::string& a_mark) const {
  *
  * @return Название Измерения
  */
-const std::string& Dimension::getName() const {
+const std::string& Dimension::name() const {
 	return m_name;
 }
 
@@ -73,7 +73,7 @@ const std::string& Dimension::getName() const {
  *
  * @return Массив Отметок на Измерении
  */
-const std::map<std::string, DimensionMark*>& Dimension::getMarks() const {
+const std::map<std::string, DimensionMark*>& Dimension::Marks() const {
 	return m_marks_map;
 }
 

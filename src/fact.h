@@ -21,16 +21,16 @@ public:
 	void pushFactClassifier(FactClassifier* a_point);
 
 	// Получение вектора связанных Классификаторов Факта
-	const std::vector<FactClassifier*>& getFactClassifiers() const;
+	const std::vector<FactClassifier*>& FactClassifiers() const;
 
 	// Получение значения Факта
-	double getValue() const;
+	double value() const;
 
 	// Получение названия Метрики Факта
-	const std::string& getMetricName() const;
+	const std::string& MetricName() const;
 
 	// Получение связанной Метрики
-	const Metric* const getMetric() const;
+	const Metric* const metric() const;
 
 private:
 	// Значение Факта

@@ -28,7 +28,7 @@ Date::Date(uint8_t a_day, uint8_t a_month, uint16_t a_year): m_day(a_day), m_mon
  *
  * @return Год
  */
-uint16_t Date::getyear() const {
+uint16_t Date::year() const {
 	return m_year;
 }
 
@@ -37,7 +37,7 @@ uint16_t Date::getyear() const {
  *
  * @return Месяц
  */
-uint8_t Date::getmonth() const {
+uint8_t Date::month() const {
 	return m_month;
 }
 
@@ -46,7 +46,7 @@ uint8_t Date::getmonth() const {
  *
  * @return День
  */
-uint8_t Date::getday() const {
+uint8_t Date::day() const {
 	return m_day;
 }
 

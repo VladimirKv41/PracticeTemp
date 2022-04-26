@@ -10,6 +10,7 @@ struct DateTime;
  * @brief Тип данных.
  */
 enum class var_type {
+	VOID,
 	INT64,
 	UINT64,
 	BOOL,
@@ -29,6 +30,8 @@ enum class var_type {
  */
 class Variant {
 public:
+
+	Variant(void* a_var);
 
 	Variant(std::int64_t a_var);
 
@@ -52,10 +55,10 @@ public:
 
 	// Возвращение значения типа данных.
 	template <typename T>
-	T getvalue() const;
+	T value() const;
 
 	// Возвращение типа данных.
-	var_type getvaluetype() const;
+	var_type valueType() const;
 
 	// Перегрузка оператора сравнения == для класса Variant.
 	friend bool operator== (const Variant& a_variant_1, const Variant& a_variant_2);

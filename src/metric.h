@@ -13,7 +13,7 @@
 		Metric(const std::string& a_name);
 
 		// Получение название метрики
-		const std::string& getName() const;
+		const std::string& name() const;
 
 	private:
 		// Название метрики

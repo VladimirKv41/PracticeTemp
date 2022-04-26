@@ -14,7 +14,10 @@ if(MSVC)
 	string(REPLACE "/MDd" "/MTd" CMAKE_CXX_FLAGS_DEBUG ${CMAKE_CXX_FLAGS_DEBUG})
 	set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /wd4244 /wd4715")
 	string(REPLACE "/MD" "/MT" CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
+	set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /wd4244 /wd4715")
 endif()
+
+set(CMAKE_BUILD_TYPE "Release")
 
 if(NOT EXISTS ${GTESTDIR})
   message(SEND_ERROR "Specify GoogleTest directory")
@@ -37,13 +40,19 @@ target_include_directories(CMakeCubeTest PRIVATE "src")
 target_include_directories(CMakeCubeTest PRIVATE "${GTESTDIR}")
 
 if(MINGW OR UNIX)
-target_link_libraries(CMakeCubeTest
-"${BUILDDIR}/libgtest.a" 
-"${BUILDDIR}/libgtest_main.a" -pthread )
+	target_link_libraries(CMakeCubeTest
+	"${BUILDDIR}/libgtest.a" 
+	"${BUILDDIR}/libgtest_main.a" -pthread )
 elseif(MSVC)
-target_link_libraries(CMakeCubeTest
-"${BUILDDIR}/gtestd.lib" 
-"${BUILDDIR}/gtest_maind.lib" -pthread )
+	if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+		target_link_libraries(CMakeCubeTest
+		"${BUILDDIR}/gtestd.lib" 
+		"${BUILDDIR}/gtest_maind.lib" -pthread )
+	elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+		target_link_libraries(CMakeCubeTest
+		"${BUILDDIR}/gtest.lib" 
+		"${BUILDDIR}/gtest_main.lib")
+	endif()
 endif()
 
 add_test(NAME CMakeCubeTest COMMAND CMakeCubeTest)

@@ -24,7 +24,7 @@ void DimensionMark::pushFactClassifier(const std::string& a_meas, FactClassifier
  *
  * @return Название Отметки на Измерении
  */
-const std::string& DimensionMark::getName() const {
+const std::string& DimensionMark::name() const {
 	return m_name;
 }
 
@@ -33,6 +33,6 @@ const std::string& DimensionMark::getName() const {
  *
  * @return Массив связанных Классификаторо Фактов
  */
-const std::unordered_multimap<std::string, FactClassifier*>& DimensionMark::getFactClassifiers() const {
+const std::unordered_multimap<std::string, FactClassifier*>& DimensionMark::FactClassifiers() const {
 	return m_classifiers;
 }

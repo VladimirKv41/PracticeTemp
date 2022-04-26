@@ -21,19 +21,19 @@ public:
 	void pushFactClassifier(FactClassifier* a_point);
 
 	// Получение вектора связанных Классификатор Фактов
-	const std::vector<FactClassifier*>& getFactClassifiers() const;
+	const std::vector<FactClassifier*>& FactClassifiers() const;
 
 	// Получение Отметки на Измерении
-	DimensionMark* const getDimensionMark(const std::string& a_mark);
+	DimensionMark* const dimensionMark(const std::string& a_mark);
 
 	// Поиск Отметки на Измерении
 	bool searchMark(const std::string& a_mark) const;
 
 	// Получение названия Измерения
-	const std::string& getName() const;
+	const std::string& name() const;
 
 	// Получение массива Отметок на Измерении
-	const std::map<std::string, DimensionMark*>& getMarks() const;
+	const std::map<std::string, DimensionMark*>& Marks() const;
 
 	~Dimension();
 

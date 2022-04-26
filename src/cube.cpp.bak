@@ -65,8 +65,8 @@ add_result Cube::addFact(double a_value, const std::string& a_metric_name, const
 		return add_result::UNKNOWN_MEASURE;
 	}
 	// Поиск в уже добавленных ранее Фактах
-	if (m_facts.find({ a_metric_name, a_marks_list }) != m_facts.end())
-		return add_result::ALREADY_EXIST;
+	//if (m_facts.find({ a_metric_name, a_marks_list }) != m_facts.end())
+	//	return add_result::ALREADY_EXIST;
 	auto it_list = a_marks_list.begin();
 	auto iter_new_fact = m_facts.insert({ { a_metric_name, a_marks_list }, new Fact(a_value, *it_metric) });
 	// Добавление Классификаторов Факта

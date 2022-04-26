@@ -21,10 +21,10 @@ public:
 	void pushFactClassifier(const std::string& a_meas, FactClassifier* a_point);
 
 	// Получение названия Отметки на Измерении
-	const std::string& getName() const;
+	const std::string& name() const;
 
 	// Получение массива связанных Классификаторов Фактов
-	const std::unordered_multimap<std::string, FactClassifier*>& getFactClassifiers() const;
+	const std::unordered_multimap<std::string, FactClassifier*>& FactClassifiers() const;
 
 private:
 

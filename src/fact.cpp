@@ -26,7 +26,7 @@ void Fact::pushFactClassifier(FactClassifier* a_point) {
  *
  * @return Вектор связанных Классификаторов Факта
  */
-const std::vector<FactClassifier*>& Fact::getFactClassifiers() const {
+const std::vector<FactClassifier*>& Fact::FactClassifiers() const {
 	return m_classifiers;
 }
 
@@ -35,7 +35,7 @@ const std::vector<FactClassifier*>& Fact::getFactClassifiers() const {
  *
  * @return Значения Факта
  */
-double Fact::getValue() const {
+double Fact::value() const {
 	return m_value;
 }
 
@@ -44,8 +44,8 @@ double Fact::getValue() const {
  *
  * @return Название Метрики
  */
-const std::string& Fact::getMetricName() const {
-	return m_mes->getName();
+const std::string& Fact::MetricName() const {
+	return m_mes->name();
 }
 
 /**
@@ -53,6 +53,6 @@ const std::string& Fact::getMetricName() const {
  *
  * @return Связанная Метрика
  */
-const Metric* const Fact::getMetric() const {
+const Metric* const Fact::metric() const {
 	return m_mes;
 }

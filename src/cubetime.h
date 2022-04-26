@@ -13,13 +13,13 @@ public:
 	Time(uint8_t a_hours, uint8_t a_minutes, uint8_t a_seconds);
 
 	// Возращение часов из временной отметки
-	uint16_t gethours() const;
+	uint16_t hours() const;
 
 	// Возращение минут из временной отметки
-	uint8_t getminutes() const;
+	uint8_t minutes() const;
 
 	// Возращение секунд из временной отметки
-	uint8_t getseconds() const;
+	uint8_t seconds() const;
 
 	// Перегрузка оператора сравнения == для класса Time.
 	friend bool operator== (const Time& a_time_1, const Time& a_time_2);

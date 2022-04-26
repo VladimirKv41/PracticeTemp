@@ -14,7 +14,7 @@ FactClassifier::FactClassifier(Fact* a_fact, Dimension* a_dim, DimensionMark* a_
 	// Даём указатель на эту Классификатор Факту и Измерению, связанным с этим Классификатор
 	m_fact->pushFactClassifier(this);
 	m_dim->pushFactClassifier(this);
-	m_dim_mark->pushFactClassifier(m_fact->getMetricName(), this);
+	m_dim_mark->pushFactClassifier(m_fact->MetricName(), this);
 }
 
 /**
@@ -41,5 +41,5 @@ Fact* const FactClassifier::getFact() const {
  * @return Название Отметки на связанном Измерении
  */
 const std::string& FactClassifier::getDimMarkName() const {
-	return m_dim_mark->getName();
+	return m_dim_mark->name();
 }

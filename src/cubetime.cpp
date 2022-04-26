@@ -22,7 +22,7 @@ Time::Time(uint8_t a_hours, uint8_t a_minutes, uint8_t a_seconds) : m_hours(a_ho
 
  * @return Количество часов
  */
-uint16_t Time::gethours() const {
+uint16_t Time::hours() const {
 	return m_hours;
 }
 
@@ -31,7 +31,7 @@ uint16_t Time::gethours() const {
  *
  * @return Количество минут
  */
-uint8_t Time::getminutes() const {
+uint8_t Time::minutes() const {
 	return m_minutes;
 }
 
@@ -40,7 +40,7 @@ uint8_t Time::getminutes() const {
  *
  * @return Количество секунд
  */
-uint8_t Time::getseconds() const {
+uint8_t Time::seconds() const {
 	return m_seconds;
 }
 

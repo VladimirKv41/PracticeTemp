@@ -13,13 +13,13 @@ public:
 	Date(uint8_t a_day, uint8_t a_month, uint16_t a_year);
 
 	// Возращение года из даты.
-	uint16_t getyear() const;
+	uint16_t year() const;
 
 	// Возращение месяца из даты.
-	uint8_t getmonth() const;
+	uint8_t month() const;
 
 	// Возращение дня из даты.
-	uint8_t getday() const;
+	uint8_t day() const;
 
 	// Перегрузка оператора сравнения == для класса Date.
 	friend bool operator== (const Date& a_date_1, const Date& a_date_2);

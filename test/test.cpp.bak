@@ -638,9 +638,11 @@ TEST(StressTest, MakeTimeFor_3650000_Elements) {
 		}
 	}
 	Selection* select = new Selection(cube);
-	select->make("Год", { "2005", "2009" }, { "Цена" });
-	select->make("Дата", { "День 14" , "День 16" , "День 321", "День 788", "День 4124" , "День 4421" });
-	select->clean();
+	for (int i = 0; i < 10; i++) {
+		select->make("Год", { "2005", "2009" }, { "Цена" });
+		select->make("Дата", { "День 14" , "День 16" , "День 321", "День 788", "День 4124" , "День 4421" });
+		select->clean();
+	}
 	delete cube;
 	delete select;
 	SUCCEED();
