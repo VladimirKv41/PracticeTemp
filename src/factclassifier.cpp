@@ -22,7 +22,7 @@ FactClassifier::FactClassifier(Fact* a_fact, Dimension* a_dim, DimensionMark* a_
  *
  * @return Связанное Измерение
  */
-const Dimension* const FactClassifier::getDimension() const {
+const Dimension* const FactClassifier::dimension() const {
 	return m_dim;
 }
 
@@ -31,7 +31,7 @@ const Dimension* const FactClassifier::getDimension() const {
  *
  * @return Связанный Факт
  */
-Fact* const FactClassifier::getFact() const {
+Fact* const FactClassifier::fact() const {
 	return m_fact;
 }
 
@@ -40,6 +40,6 @@ Fact* const FactClassifier::getFact() const {
  *
  * @return Название Отметки на связанном Измерении
  */
-const std::string& FactClassifier::getDimMarkName() const {
+const std::string& FactClassifier::DimMarkName() const {
 	return m_dim_mark->name();
 }

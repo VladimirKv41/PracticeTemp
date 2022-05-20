@@ -32,20 +32,6 @@ class Cube;
 class Fact;
 class Metric;
 
-struct hash_pair {
-	template <class T1, class T2>
-	size_t operator()(const std::pair<T1, T2>& p) const
-	{
-		auto hash1 = std::hash<T1>{}(p.first);
-		auto hash2 = std::hash<T2>{}(p.second);
-		return hash1 ^ hash2;
-	}
-};
-// Тип данных Выборки из Классификаторов
-// Ключ: пара <Название Измерения, Название Отметок на Измерении>,
-// Значение: Ключ: название Метрики, Значение: указатель на Классификатор Факта
-typedef std::unordered_map<std::pair<std::string, std::string>, std::unordered_multimap<std::string, FactClassifier*>, hash_pair> dpoint_ummaps_map;
-
 /**
  * @brief Выборка.
  *
@@ -57,7 +43,13 @@ public:
 	Selection(Cube* a_cube);
 
 	// Создание Выборки
-	make_result make(const std::string& a_dim_name, const std::vector<std::string>& a_marks_list, const std::set<std::string>& a_metric_list = {});
+	make_result make(const std::string& a_dim_name, const std::initializer_list<std::string>& a_marks_list, const std::set<std::string>& a_metric_list = {});
+	
+	// Выбор агрегации
+	bool aggregation(agg_type a_agg_type, const std::string& a_dimension_name, const std::vector<std::string>& a_measure_list = {});
+	
+	// Вывод Выборки
+	void print() const;
 
 	// Очистка Выборки
 	void clean(bool cube_cleaning = false);
@@ -72,36 +64,39 @@ private:
 	// Заполнение Выборки (для изначально пустой Выборки)
 	void making
 	(
-		const std::map<std::string, DimensionMark*>& a_map_from,
-		const std::string& a_dim_name, const std::vector<std::string>& a_marks_list,
+		const Dimension* a_dimension,
+		const std::initializer_list<std::string>& a_marks_list,
 		const std::set<std::string>& a_metric_list
 	);
-
+	
 	// Заполнение Выборки (для уже заполненной Выборки)
 	void making
 	(
-		const dpoint_ummaps_map& a_map_from,
 		const std::string& a_dim_name,
-		const std::vector<std::string>& a_marks_list,
+		const std::initializer_list<std::string>& a_marks_list,
 		const std::set<std::string>& a_metric_list
 	);
 
-	// Получение Классификаторов Фактов с указанными Метриками
-	void FactClassifiersByMetric
+	// Добавление Классификаторов c указанными Отметками
+	void addFactClassifiers
 	(
-		std::unordered_multimap<std::string, FactClassifier*>& a_umap_to,
-		const std::unordered_multimap<std::string, FactClassifier*>& a_umap_from,
-		const std::set<std::string>& a_metric_list
+		const FactClassifier* a_dimension,
+		const std::initializer_list<std::string>& a_marks_list
 	);
 
-	// Добавление оставшихся Классификаторов Фактов
-	void addRestFactClassifiers(dpoint_ummaps_map& a_map, const std::string& a_dim_name, const std::string& a_dim_mark);
-
+	// Агрегация - суммирование
+	void count(const std::string& a_dimension_name, const std::vector<std::string>& a_measure_list);
+	// Агрегация - количество
+	void sum(const std::string& a_dimension_name, const std::vector<std::string>& a_measure_list);
+	// Агрегация - среднее значение
+	void average(const std::string& a_dimension_name, const std::vector<std::string>& a_measure_list);
 
 	// Те Классификаторы Фактов Куба, из которых состоит Выборка
-	dpoint_ummaps_map m_selection_points;
-	// Метрики, созданные на основе агрегации
+	std::vector<FactClassifier*> m_selection_classifiers;
+	// Метрики, Факты и Классификаторы, созданные на основе агрегации
+	std::vector<FactClassifier*> m_aggregation_classifiers;
 	std::vector<Metric*> m_aggregation_metrics;
+	std::vector<Fact*> m_aggregation_facts;
 	// Измерение для агрегаций
 	Dimension* m_aggregation_dim;
 	// Связанный Куб для создания Выборки

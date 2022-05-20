@@ -1,7 +1,7 @@
 ﻿#ifndef DIMENSION_MARK_H
 #define DIMENSION_MARK_H
 #include <string>
-#include <unordered_map>
+#include <map>
 
 class Dimension;
 class Metric;
@@ -24,7 +24,7 @@ public:
 	const std::string& name() const;
 
 	// Получение массива связанных Классификаторов Фактов
-	const std::unordered_multimap<std::string, FactClassifier*>& FactClassifiers() const;
+	const std::multimap<std::string, FactClassifier*>& FactClassifiers() const;
 
 private:
 
@@ -32,7 +32,7 @@ private:
 	std::string m_name;
 	// Массив связанных Классификаторов Фактов
 	// Ключ: название Метрики
-	std::unordered_multimap<std::string, FactClassifier*> m_classifiers;
+	std::multimap<std::string, FactClassifier*> m_classifiers;
 };
 
 #endif

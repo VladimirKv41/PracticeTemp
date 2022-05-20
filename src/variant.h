@@ -53,6 +53,9 @@ public:
 
 	Variant(DateTime a_var);
 
+	// Конструктор копирования
+	Variant(const Variant& a_var);
+
 	// Возвращение значения типа данных.
 	template <typename T>
 	T value() const;

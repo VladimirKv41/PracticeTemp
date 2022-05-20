@@ -4,6 +4,7 @@
 #include <locale>
 #include <chrono>
 #include <iomanip>
+#include <fstream>
 #include "cube.h"
 #include "selection.h"
 #include "variant.h"
@@ -14,7 +15,7 @@
 #define new DEBUG_NEW
 
 int main() {
-
-	_CrtDumpMemoryLeaks();
+	
+	//_CrtDumpMemoryLeaks();
 	return 0;
 }

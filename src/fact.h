@@ -6,6 +6,7 @@
 class Dimension;
 class Metric;
 class FactClassifier;
+class Variant;
 
 /**
  * @brief Факт.
@@ -15,7 +16,7 @@ class FactClassifier;
 class Fact {
 public:
 
-	Fact(double a_value, Metric* a_mes);
+	Fact(Variant* a_value, Metric* a_mes);
 
 	// Добавление связанного Классификатора Факта
 	void pushFactClassifier(FactClassifier* a_point);
@@ -24,7 +25,7 @@ public:
 	const std::vector<FactClassifier*>& FactClassifiers() const;
 
 	// Получение значения Факта
-	double value() const;
+	const Variant& value() const;
 
 	// Получение названия Метрики Факта
 	const std::string& MetricName() const;
@@ -32,9 +33,11 @@ public:
 	// Получение связанной Метрики
 	const Metric* const metric() const;
 
+	~Fact();
+
 private:
 	// Значение Факта
-	double m_value;
+	Variant* m_value;
 	// Связанная Метрика
 	Metric* m_mes;
 	// Вектор связанных Классификаторов Факта

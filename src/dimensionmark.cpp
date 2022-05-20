@@ -33,6 +33,6 @@ const std::string& DimensionMark::name() const {
  *
  * @return Массив связанных Классификаторо Фактов
  */
-const std::unordered_multimap<std::string, FactClassifier*>& DimensionMark::FactClassifiers() const {
+const std::multimap<std::string, FactClassifier*>& DimensionMark::FactClassifiers() const {
 	return m_classifiers;
 }

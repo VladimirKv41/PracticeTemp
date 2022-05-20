@@ -18,13 +18,13 @@ public:
 	FactClassifier(Fact* a_fact, Dimension* a_dim, DimensionMark* a_dim_mark);
 
 	// Получение связанного Измерения
-	const Dimension* const getDimension() const;
+	const Dimension* const dimension() const;
 
 	// Получение связанного Факта
-	Fact* const getFact() const;
+	Fact* const fact() const;
 
 	// Получение названия Отметки на Измерении
-	const std::string& getDimMarkName() const;
+	const std::string& DimMarkName() const;
 
 private:
 	// Связанные Факт/Измерение/Отметка в Измерении

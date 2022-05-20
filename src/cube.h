@@ -2,16 +2,18 @@
 #define CUBE_H
 #include <string>
 #include <vector>
+#include <unordered_set>
 #include <map>
 #include <unordered_map>
 
+
 /**
- * @brief Результат добавления факта.
+ * @brief Результат добавления Факта.
  */
 enum class add_result {
-	UNKNOWN_MEASURE = -1, // неизвестная метрика
-	ALREADY_EXIST, // факт уже существует
-	ADDED // факт добавлен
+	UNKNOWN_MEASURE = -1, // неизвестная Метрика
+	ALREADY_EXIST, // Факт уже существует
+	ADDED // Факт добавлен
 };
 
 class Dimension;
@@ -19,6 +21,7 @@ class Fact;
 class Metric;
 class FactClassifier;
 class Selection;
+class Variant;
 
 /**
  * @brief Куб.
@@ -37,9 +40,9 @@ public:
 
 	// Добавление Метрики
 	bool addMetric(const std::string& a_metric_name);
-
 	// Добавление Факта
-	add_result addFact(double a_value, const std::string& a_metric_name, const std::vector<std::string>& a_marks_list);
+	const add_result& addFact(const Variant& a_value, const std::string& a_metric, std::initializer_list<std::string> a__marks);
+
 
 	// Очистка Куба
 	void clean();
@@ -56,7 +59,7 @@ private:
 	void cleanVector(std::vector<T*>& a_vector);
 
 	// Контейнеры Фактов/Измерений/Метрик/Классификаторов Фактов Куба
-	std::multimap<std::pair<std::string, std::vector<std::string>>, Fact*> m_facts;
+	std::map<std::pair<std::string, std::vector<std::string>>, Fact*> m_facts;
 	std::vector<Dimension*> m_dims;
 	std::vector<Metric*> m_metrics;
 	std::vector<FactClassifier*> m_classifiers;

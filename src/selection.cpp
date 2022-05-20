@@ -5,6 +5,8 @@
 #include "dimensionmark.h"
 #include "fact.h"
 #include "metric.h"
+#include "variant.h"
+#include <iostream>
 
 /**
  * @brief Конструктор.
@@ -36,7 +38,7 @@ Selection::Selection(Cube* a_cube) : m_cube(a_cube), m_aggregation_dim(new Dimen
  * @return enum сlass make_result Результат составления Выборки:
  * Куб не найден/неизвестное Измерение/создана/Факты не найдены
  */
-make_result Selection::make(const std::string& a_dim_name, const std::vector<std::string>& a_marks_list, const std::set<std::string>& a_metric_list)
+make_result Selection::make(const std::string& a_dim_name, const std::initializer_list<std::string>& a_marks_list, const std::set<std::string>& a_metric_list)
 {
 	// Проверка, существует ли Куб
 	if (m_cube == nullptr)
@@ -47,14 +49,14 @@ make_result Selection::make(const std::string& a_dim_name, const std::vector<std
 		return make_result::UNKNOWN_DIMENSION;
 	}
 	// Заполнение Выборки
-	if (m_selection_points.empty()) {
-		making((*it_dim)->Marks(), a_dim_name, a_marks_list, a_metric_list);
+	if (m_selection_classifiers.empty()) {
+		making((*it_dim), a_marks_list, a_metric_list);
 	}
 	else {
-		making(m_selection_points, a_dim_name, a_marks_list, a_metric_list);
+		making(a_dim_name, a_marks_list, a_metric_list);
 	}
 	// Найдены ли Факты
-	if (m_selection_points.empty())
+	if (m_selection_classifiers.empty())
 		return make_result::NO_FACT_FOUND;
 	else
 		return make_result::CREATED;
@@ -73,9 +75,14 @@ void Selection::clean(bool cube_cleaning) {
 	if (cube_cleaning) {
 		m_cube = nullptr;
 	}
-	if (!m_selection_points.empty()) {
-		m_selection_points.clear();
+	if (!m_selection_classifiers.empty()) {
+		m_selection_classifiers.clear();
 		m_cube->cleanVector(m_aggregation_metrics);
+		m_cube->cleanVector(m_aggregation_classifiers);
+		for (class std::vector<Fact*>::iterator it = m_aggregation_facts.begin(); it != m_aggregation_facts.end(); it++) {
+			delete* it;
+		}
+		m_aggregation_facts.clear();
 	}
 }
 
@@ -96,154 +103,101 @@ Selection::~Selection() {
  *
  * Итерация по списку Отметок, каждая Отметка ищется на Измерении:
  *	1. Проверка перед добавлением, существует ли такая Отметка на Измерении.
- *	2. Добавление Классификаторов Отметки в массив Классификаторов Выборки
- *	(добавляются Отметки с указанными Метриками).
- *	3. Проверка, был ли найден хоть один Классификатор с указанной Метрикой,
- *	если нет, то соответствующая Отметка в Выборке удаляется.
- *	4. Добавление оставшихся Классификаторов, для "сборки" полноценных Фактов.
+ *	2. Добавление Классификаторов Отметки с одной из указанных Метрик.
  *
- * @param [in] a_map_from Массив с Отметками на Измерении, из этого массива будет составляться Выборка
- * @param [in] a_dim_name Название Измерения, добавляются Классификаторы только с этим названием Измерения
+ * @param [in] a_dimension Измерения, добавляются Классификаторы из данного Измерения
  * @param [in] a_marks_list Список названий Отметок,
  * добавляются Классификаторы только с указанными названиями Отметок
  * @param [in] a_metric_list Список названий Метрик, добавляются Классификаторы только с этими названиями Метрик
  */
 void Selection::making
 (
-	const std::map<std::string, DimensionMark*>& a_map_from,
-	const std::string& a_dim_name,
-	const std::vector<std::string>& a_marks_list,
+	const Dimension* a_dimension,
+	const std::initializer_list<std::string>& a_marks_list,
 	const std::set<std::string>& a_metric_list
 )
 {
-	for (auto it_dim_mark = a_marks_list.begin(); it_dim_mark != a_marks_list.end(); it_dim_mark++) {
-		// Cуществует ли такая Отметка
-		if (a_map_from.find(*it_dim_mark) == a_map_from.end()) \
-			continue;
-		// Добавление Классификаторов
-		FactClassifiersByMetric(m_selection_points[{a_dim_name, * it_dim_mark}], a_map_from.at(*it_dim_mark)->FactClassifiers(), a_metric_list);
-		// Был ли найден хоть один Классификатор
-		if (m_selection_points[{a_dim_name, * it_dim_mark}].empty()) {
-			m_selection_points.erase({ a_dim_name, *it_dim_mark });
-			continue;
-		}
-		// Добавление оставшихся Классификаторов
-		addRestFactClassifiers(m_selection_points, a_dim_name, *it_dim_mark);
-	}
-}
-
-/**
- * @brief Заполнение Выборки (для уже заполненной Выборки).
- *
- * 1. Объявление временной Выборки для заполнения Классификаторами из основной,
- * в конце основная будет приравнена ко временной.
- * 2. Итерация по списку Отметок, каждая Отметка ищется в Выборке:
- *	2.1. Проверка перед добавлением, существует ли такая Отметка в Выборке.
- *	2.2. Добавление Классификатор Фактов Отметок во временный массив Классификаторов Выборки 
- *		(добавляются Отметок с указанными Метриками).
- *	2.3. Проверка, была ли найдена хоть одна Классификатор с указанной Метрикой,
- *		если нет, то соответствующая Отметка в временной Выборке удаляется.
- *	2.4. Добавление оставшихся Классификаторов, для "сборки" полноценных Фактов.
- * 3. Основная Выборка приравнивается к временной.
- *
- * @param [in] a_map_from Массив с позициями Измерения, из этого массива будет составляться Выборка
- * @param [in] a_dim_name Название Измерения, добавляются Классификаторы только с этим названием Измерения
- * @param [in] a_marks_list Список названий Отметок, добавляются Классификаторы только с указанными названиями Отметок
- * @param [in] a_metric_list Список названий Метрик, добавляются Классификаторы только с этими названиями Метрик
- */
-void Selection::making
-(
-	const dpoint_ummaps_map& a_map_from,
-	const std::string& a_dim_name,
-	const std::vector<std::string>& a_marks_list,
-	const std::set<std::string>& a_metric_list
-)
-{
-	// Объявление временной Выборки
-	dpoint_ummaps_map temp_selection_points;
-	for (auto it_dim_mark = a_marks_list.begin(); it_dim_mark != a_marks_list.end(); it_dim_mark++) {
-		// Cуществует ли такая Отметка
-		if (a_map_from.find({ a_dim_name, *it_dim_mark }) == a_map_from.end())
-			continue;
-		// Добавление Классификаторов
-		FactClassifiersByMetric(temp_selection_points[{a_dim_name, * it_dim_mark}], a_map_from.at({ a_dim_name, *it_dim_mark }), a_metric_list);
-		// Был ли найден хоть один Классификатор
-		if (temp_selection_points[{a_dim_name, * it_dim_mark}].empty()) {
-			temp_selection_points.erase({ a_dim_name, *it_dim_mark });
-			continue;
-		}
-		// Добавление оставшихся Классификаторов
-		addRestFactClassifiers(temp_selection_points, a_dim_name, *it_dim_mark);
-	}
-	m_selection_points = temp_selection_points;
-}
-
-/**
- * @brief Получение Классификаторов с указанными Метриками.
- *
- * 1. Проверка, пустой ли список Метрик, если да, берутся все Классификаторы.
- * 2. Итерация по списку Метрик, каждая ищется и добавляется:
- *	2.2. Объявление переменной для хранения пары итераторов.
- *	2.2. Добавление Классификаторов.
- *
- * @param [out] a_map_to Массив, в который будут добавляться Классификаторы
- * @param [in] a_map_from  Массив, из которого будут браться Классификаторы
- * @param [in] a_metric_list Список названий Метрик, добавляются Классификаторы только с этими названиями Метрик
- */
-void Selection::FactClassifiersByMetric
-(
-	std::unordered_multimap<std::string, FactClassifier*>& a_ummap_to,
-	const std::unordered_multimap<std::string, FactClassifier*>& a_ummap_from,
-	const std::set<std::string>& a_metric_list
-)
-{
-	// Пустой ли список Метрик
-	if (a_metric_list.empty()) {
-		a_ummap_to = a_ummap_from;
-		return;
-	}
-	for (auto it = a_metric_list.begin(); it != a_metric_list.end(); it++) {
-		auto range_iter = a_ummap_from.equal_range(*it);
-		// Добавление Классификаторов
-		a_ummap_to.insert(range_iter.first, range_iter.second);
-	}
-}
-
-/**
- * @brief Добавление оставшихся Классификаторов.
- *
- * 1. Итерация по Классификаторам(1) в Выборке:
- *		2. Итерация по Классификаторам(2) Факта, связанного с Классификатором(1),
- *		для "cборки" полноценного Факта:
- *			3. Добавление всех Классификатор оставшихся по соответствующим ключам в Выборке,
- *			кроме Классификатора(1).
- *
- * @param [in] a_map Массив, в который будут добавляться Классификаторы
- * @param [in] a_dim_name Название Измерения, добавляются все Классификаторы с НЕ таким названием Измерения
- * @param [in] a_dim_mark Название Отметки на Измерении
- * (Добавляем оставшиеся Классификаторы через Классификатор с Отметкой a_dim_mark и Измерением a_dim_name)
- */
-void Selection::addRestFactClassifiers(dpoint_ummaps_map& a_map, const std::string& a_dim_name, const std::string& a_dim_mark) {
-	auto& a_map_value = a_map[{a_dim_name, a_dim_mark}];
-	for (auto it_dpoint = a_map_value.begin(); it_dpoint != a_map_value.end(); it_dpoint++) {
-		// Итерация по точкам данных факта
-		auto fact_datapoints = (*it_dpoint).second->getFact()->FactClassifiers();
-		for (auto it_dpoint2 = fact_datapoints.begin(); it_dpoint2 != fact_datapoints.end(); it_dpoint2++) {
-			auto& dim_name = (*it_dpoint2)->getDimension()->name();
-			// Добавление всех точек данных
-			if (dim_name != a_dim_name) {
-				a_map[{dim_name, (*it_dpoint2)->getDimMarkName()}].emplace((*it_dpoint).second->getFact()->MetricName(), *it_dpoint2);
-			}
+	for (auto it_list = a_marks_list.begin(); it_list != a_marks_list.end(); it_list++) {
+		auto it_mark = a_dimension->Marks().find(*it_list);
+		// Существует ли такая Отметка
+		if (it_mark != a_dimension->Marks().end()) {
+			if (a_metric_list.empty())
+				for (auto it_fc = it_mark->second->FactClassifiers().begin(); it_fc != it_mark->second->FactClassifiers().end(); it_fc++) {
+					m_selection_classifiers.push_back((*it_fc).second);
+				}
+			else
+				for (auto it_metric = a_metric_list.begin(); it_metric != a_metric_list.end(); it_metric++) {
+					auto eq_r = it_mark->second->FactClassifiers().equal_range(*it_metric);
+					for (auto it_fc2 = eq_r.first; it_fc2 != eq_r.second; it_fc2++) {
+						auto vector_fc = it_fc2->second->fact()->FactClassifiers();
+						m_selection_classifiers.insert(m_selection_classifiers.end(), vector_fc.begin(), vector_fc.end());
+					}
+				}
 		}
 	}
 }
 
-/**
- * @brief Поиск Измерения.
- *
- * @param [in] a_dimension_name Название Bзмерения
- * @return Итератор на Измерение или end()
- */
+ /**
+  * @brief Заполнение Выборки (для уже заполненной Выборки).
+  *
+  * 1. Объявление временной Выборки для поиска необходимых Классификаторов.
+  * 2. Итерация по временной Выборки:
+  *	2.1. Проверка, совпадает ли Измерение с указанным.
+  *	2.2. Добавление Классификаторов с одной из указанных Метрик.
+  *
+  * @param [in] a_dim_name Название Измерения, добавляются Классификаторы только с этим названием Измерения
+  * @param [in] a_marks_list Список названий Отметок, добавляются Классификаторы только с указанными названиями Отметок
+  * @param [in] a_metric_list Список названий Метрик, добавляются Классификаторы только с этими названиями Метрик
+  */
+  void Selection::making
+  (
+  	const std::string& a_dim_name,
+  	const std::initializer_list<std::string>& a_marks_list,
+  	const std::set<std::string>& a_metric_list
+  )
+  {
+	  std::vector<FactClassifier*> temp_vector = m_selection_classifiers;
+	  m_selection_classifiers.clear();
+	  for (auto it_fc = temp_vector.begin(); it_fc != temp_vector.end(); it_fc++) {
+		  if ((*it_fc)->dimension()->name() == a_dim_name) {
+			  if (a_metric_list.empty()) {
+					 addFactClassifiers((*it_fc), a_marks_list);
+			  }
+			  else {
+					 addFactClassifiers((*it_fc), a_marks_list);
+			  }
+		  }
+	  }
+  }
+
+  /**
+   * @brief Добавление Классификаторов c указанными Отметками
+   *
+   * 1. Проверка, совпадает ли Отметка Классификатора с указанными в списке.
+   * 2. Добавление Классификаторов.
+   *
+   * @param [in] a_fact_classifier Классификатор, 
+   * с которым будут добавлены связанные Классификаторы
+   * @param [in] a_marks_list Список названий Отметок
+   */
+   void Selection::addFactClassifiers
+   (
+	   const FactClassifier* a_fact_classifier,
+	   const std::initializer_list<std::string>& a_marks_list
+   )
+   {
+	   if (std::find(a_marks_list.begin(), a_marks_list.end(), a_fact_classifier->DimMarkName()) != a_marks_list.end()) {
+		   auto vector_fc = a_fact_classifier->fact()->FactClassifiers();
+		   m_selection_classifiers.insert(m_selection_classifiers.end(), vector_fc.begin(), vector_fc.end());
+	   }
+   }
+
+	/**
+	 * @brief Поиск Измерения.
+	 *
+	 * @param [in] a_dimension_name Название Bзмерения
+	 * @return Итератор на Измерение или end()
+	 */
 std::vector<Dimension*>::const_iterator Selection::findDimension(const std::string& a_dimension_name) const {
 	for (auto it_dim = m_cube->m_dims.begin(); it_dim != m_cube->m_dims.end(); it_dim++) {
 		if ((*it_dim)->name() == a_dimension_name) {

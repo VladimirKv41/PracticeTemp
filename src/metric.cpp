@@ -3,16 +3,16 @@
 /**
  * @brief Конструктор.
  *
- * @param [in,out] a_name Название метрики
+ * @param [in,out] a_name Название Метрики
  */
 Metric::Metric(const std::string& a_name) : m_name(a_name) {
 
 }
 
 /**
- * @brief Получение название метрики.
+ * @brief Получение название Метрики.
  *
- * @return Название метрики
+ * @return Название Метрики
  */
 const std::string& Metric::name() const {
 	return m_name;

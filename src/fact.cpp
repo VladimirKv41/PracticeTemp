@@ -1,6 +1,6 @@
 ﻿#include "fact.h"
 #include "metric.h"
-
+#include "variant.h"
 
 /**
  * @brief Конструктор.
@@ -8,7 +8,7 @@
  * @param [in] a_value Значение
  * @param [in,out] a_mes Метрика
  */
-Fact::Fact(double a_value, Metric* a_mes) : m_value(a_value), m_mes(a_mes) {
+Fact::Fact(Variant* a_value, Metric* a_mes) : m_value(a_value), m_mes(a_mes) {
 
 }
 
@@ -35,7 +35,7 @@ const std::vector<FactClassifier*>& Fact::FactClassifiers() const {
  *
  * @return Значения Факта
  */
-double Fact::value() const {
+const Variant& Fact::value() const {
 	return m_value;
 }
 
@@ -55,4 +55,11 @@ const std::string& Fact::MetricName() const {
  */
 const Metric* const Fact::metric() const {
 	return m_mes;
+}
+
+/**
+ * @brief Деструктор.
+ */
+Fact::~Fact() {
+	delete m_value;
 }

@@ -104,6 +104,9 @@ Variant::Variant(DateTime a_var) : m_var_type(var_type::DATETIME), m_pointer_to_
 
 }
 
+
+
+
 /**
  * @brief Возвращение значения типа данных.
  *
@@ -170,6 +173,36 @@ const DateTime& Variant::value<const DateTime&>() const {
 }
 
 /**
+ * @brief Конструктор копирования.
+ *
+ * @param [in] a_var Объект для копирования
+ */
+Variant::Variant(const Variant& a_var) : m_var_type(a_var.m_var_type) {
+	if (m_var_type == var_type::VOID)
+		m_pointer_to_value = new void* (a_var.m_pointer_to_value);
+	if (m_var_type == var_type::INT64)
+		m_pointer_to_value = new int64_t(a_var.value<int64_t>());
+	if (m_var_type == var_type::UINT64)
+		m_pointer_to_value = new uint64_t(a_var.value<uint64_t>());
+	if (m_var_type == var_type::BOOL)
+		m_pointer_to_value = new bool(a_var.value<bool>());
+	if (m_var_type == var_type::LDOUBLE)
+		m_pointer_to_value = new long double(a_var.value<long double>());
+	if (m_var_type == var_type::CHAR)
+		m_pointer_to_value = new char(a_var.value<char>());
+	if (m_var_type == var_type::STRING)
+		m_pointer_to_value = new std::string(a_var.value<std::string>());
+	if (m_var_type == var_type::WSTRING)
+		m_pointer_to_value = new std::wstring(a_var.value<std::wstring>());
+	if (m_var_type == var_type::DATE)
+		m_pointer_to_value = new Date(a_var.value<Date>());
+	if (m_var_type == var_type::TIME)
+		m_pointer_to_value = new Time(a_var.value<Time>());
+	if (m_var_type == var_type::DATETIME)
+		m_pointer_to_value = new DateTime(a_var.value<DateTime>());;
+}
+
+/**
  * @brief Возвращение типа данных.
  * 
  * @return enum class var_type Тип данных
@@ -222,7 +255,7 @@ bool Variant::operator!= (const Variant& a_other) const
 }
 
 /**
- * @brief Перегрузка оператора присваивания == для класса Variant.
+ * @brief Перегрузка оператора присваивания = для класса Variant.
  *
  */
 Variant& Variant::operator= (const Variant& a_variant)

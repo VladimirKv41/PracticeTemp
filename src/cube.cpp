@@ -5,6 +5,7 @@
 #include "fact.h"
 #include "factclassifier.h"
 #include "selection.h"
+#include "variant.h"
 
 /**
  * @brief Конструктор.
@@ -55,26 +56,28 @@ bool Cube::addMetric(const std::string& a_metric_name) {
  *
  * @param [in] a_value Значение добавляемого Факта
  * @param [in] a_metric Название Метрики добавляемого Факта
- * @param [in] a_marks_list Список Отметок на Измерениях добавляемого Факта
+ * @param [in] a_marks Список названий Отметок на Измерениях добавляемого Факта
  * @return enum class add_result Результат добавления Факта : неизвестная Метрика/уже существует/добавлен
  */
-add_result Cube::addFact(double a_value, const std::string& a_metric_name, const std::vector<std::string>& a_marks_list) {
+const add_result& Cube::addFact(const Variant& a_value, const std::string& a_metric_name, std::initializer_list<std::string> a_marks) {
 	// Поиск указанной Метрики
 	std::vector<Metric*>::const_iterator it_metric = findMetric(a_metric_name);
 	if (it_metric == m_metrics.end()) {
 		return add_result::UNKNOWN_MEASURE;
 	}
 	// Поиск в уже добавленных ранее Фактах
-	if (m_facts.find({ a_metric_name, a_marks_list }) != m_facts.end())
-		return add_result::ALREADY_EXIST;
-	auto it_list = a_marks_list.begin();
-	auto iter_new_fact = m_facts.insert({ { a_metric_name, a_marks_list }, new Fact(a_value, *it_metric) });
-	// Добавление Классификаторов Факта
-	for (auto it_dim = m_dims.begin(); it_dim != m_dims.end(); it_dim++, it_list++) {
-		m_classifiers.push_back(new FactClassifier(iter_new_fact->second, *it_dim, (*it_dim)->dimensionMark(*it_list)));
+	if (m_facts.insert({ { a_metric_name, a_marks },new Fact(new Variant(a_value), *it_metric) }).second) {
+		auto it_list = a_marks.begin();
+		// Добавление Классификаторов Факта
+		for (auto it_dim = m_dims.begin(); it_dim != m_dims.end(); it_dim++, it_list++) {
+			m_classifiers.push_back(new FactClassifier(m_facts[{ a_metric_name, a_marks }], *it_dim, (*it_dim)->dimensionMark(*it_list)));
+		}
+		return add_result::ADDED;
 	}
-	return add_result::ADDED;
+	else
+		return add_result::ALREADY_EXIST;
 }
+
 
 /**
  * @brief Очистка Куба.
